@@ -18,44 +18,7 @@
 			<NC File="NC.xti"/>
 		</Motion>
 		<Plc>
-			<Project GUID="{FB261665-FD20-4BF2-97F8-2854C82B752D}" Name="tc_project_app" PrjFilePath="tc_project_app\tc_project_app.plcproj" TmcFilePath="tc_project_app\tc_project_app.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="tc_project_app\tc_project_app.tmc">
-					<Name>tc_project_app Instance</Name>
-					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
-					<Vars VarGrpType="2" ContextId="1" AreaNo="17">
-						<Name>PlcTask Outputs</Name>
-						<Var>
-							<Name>MAIN.bOutput1</Name>
-							<Comment><![CDATA[Outputs: Power for Limit switches and Home Sensors (every 4th output)]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-					</Vars>
-					<Contexts>
-						<Context>
-							<Id NeedCalleeCall="true">0</Id>
-							<Name>PlcTaskCom</Name>
-							<ManualConfig>
-								<OTCID>#x02010060</OTCID>
-							</ManualConfig>
-							<Priority>4</Priority>
-							<CycleTime>1000000</CycleTime>
-						</Context>
-						<Context>
-							<Id NeedCalleeCall="true">1</Id>
-							<Name>PlcTask</Name>
-							<ManualConfig>
-								<OTCID>#x02010040</OTCID>
-							</ManualConfig>
-							<Priority>12</Priority>
-							<CycleTime>10000000</CycleTime>
-						</Context>
-					</Contexts>
-					<TaskPouOids>
-						<TaskPouOid Prio="4" OTCID="#x08502041"/>
-						<TaskPouOid Prio="12" OTCID="#x08502042"/>
-					</TaskPouOids>
-				</Instance>
-			</Project>
+			<Project File="tc_project_app.xti"/>
 		</Plc>
 	</Project>
 </TcSmProject>
