@@ -19,7 +19,7 @@
 					<ManualConfig>
 						<OTCID>#x02010060</OTCID>
 					</ManualConfig>
-					<Priority>4</Priority>
+					<Priority>5</Priority>
 					<CycleTime>1000000</CycleTime>
 				</Context>
 				<Context>
@@ -28,13 +28,13 @@
 					<ManualConfig>
 						<OTCID>#x02010040</OTCID>
 					</ManualConfig>
-					<Priority>12</Priority>
+					<Priority>10</Priority>
 					<CycleTime>10000000</CycleTime>
 				</Context>
 			</Contexts>
 			<TaskPouOids>
-				<TaskPouOid Prio="4" OTCID="#x08502041"/>
-				<TaskPouOid Prio="12" OTCID="#x08502042"/>
+				<TaskPouOid Prio="5" OTCID="#x08502041"/>
+				<TaskPouOid Prio="10" OTCID="#x08502042"/>
 			</TaskPouOids>
 		</Instance>
 	</Project>
