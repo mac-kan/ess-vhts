@@ -4,6 +4,17 @@
 		<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="tc_project_app\tc_project_app.tmc">
 			<Name>tc_project_app Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+			<Vars VarGrpType="1" ContextId="1" AreaNo="16">
+				<Name>PlcTask Inputs</Name>
+				<Var>
+					<Name>PILS_DEVICES.nEncoderValueAxis1</Name>
+					<Type>UINT</Type>
+				</Var>
+				<Var>
+					<Name>PILS_DEVICES.nEncoderValueAxis2</Name>
+					<Type>UINT</Type>
+				</Var>
+			</Vars>
 			<Vars VarGrpType="2" ContextId="1" AreaNo="17">
 				<Name>PlcTask Outputs</Name>
 				<Var>
