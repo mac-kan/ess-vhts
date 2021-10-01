@@ -33,7 +33,7 @@
     <Compile Include="POUs\Application Specific\Applications\Application_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Application Specific\Axes\Axis_Template.TcPOU">
+    <Compile Include="POUs\Application_Specific\Axes\Axis_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
@@ -58,6 +58,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\E_RestorePosition.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\E_SlitPairStates.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisConfig.TcDUT">
@@ -94,6 +97,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Motion\FB_Axis.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\Motion\FB_SlitPair.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_Homing.TcPOU">
@@ -173,9 +179,8 @@
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-    <Folder Include="POUs\Application Specific" />
-    <Folder Include="POUs\Application Specific\Applications" />
-    <Folder Include="POUs\Application Specific\Axes" />
+    <Folder Include="POUs\Application_Specific\Applications" />
+    <Folder Include="POUs\Application_Specific\Axes" />
     <Folder Include="tc_mca_std_lib\POUs\Motion\Homing" />
     <Folder Include="tc_mca_std_lib\VISUs" />
     <Folder Include="tc_pils\tc_pils_generic\POUs\PILS_device_types" />
@@ -192,6 +197,7 @@
     <Folder Include="tc_pils\tc_pils_generic\DUTs" />
     <Folder Include="tc_pils\tc_pils_generic\POUs" />
     <Folder Include="POUs" />
+    <Folder Include="POUs\Application_Specific" />
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="System_VisuElemMeter">
