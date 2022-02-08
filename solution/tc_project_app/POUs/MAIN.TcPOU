@@ -78,11 +78,12 @@ END_IF]]></ST>
         <ST><![CDATA[//Call the programs that are defined in the "Application Specific" folder.
 //Create as many programs in that folder as axes and applications you have or need
 
-//Axes initial parameters and program
+//Axes program calls
 Axis_Template();
+Pneumatics_Template();
 
 //Application program calls
-]]></ST>
+Application_Template();]]></ST>
       </Implementation>
     </Action>
     <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}" FolderPath="POSITION_RECOVERY\">
@@ -236,6 +237,7 @@ END_FOR]]></ST>
       <LineId Id="7" Count="0" />
       <LineId Id="6" Count="0" />
       <LineId Id="8" Count="0" />
+      <LineId Id="11" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="3" Count="0" />
