@@ -3,31 +3,25 @@
   <POU Name="PILS_DEVICES" Id="{c13d0ec1-dadc-4beb-a3f1-3a752770c4f8}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM PILS_DEVICES
 VAR
-    nEncoderValueAxis1 AT %I*: UINT;
-    nEncoderValueAxis2 AT %I*: UINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//Interface between PILS and AXIS
 (* Example code of how to link the axis and PILS:
-
-fbMotorM1(stAxisStruct:= astAxes[1], stDeviceStructPILS:= stMotorM1, stAxisPar:= stMotorM1Param, nErrorID=> GVL_PILS.stMotorM1ErrorID.nValue);
+fbMotorM1(stAxisStruct:= astAxes[1], stDeviceStructPILS:= stMotorM1, stAxisPar:= stMotorM1Param);
+stMotor1Temp.fValue := Axis_1.fMotTemp1;
 stMotorM1EncoderRaw.nValue := nEncoderValueAxis1;
-fbMotorM2(stAxisStruct:= astAxes[2], stDeviceStructPILS:= stMotorM2, stAxisPar:= stMotorM2Param);
-stMotor2Temp.fValue := Axis_2.fMotTemp2;
-stMotorM2EncoderRaw.nValue := nEncoderValueAxis2;
 *)
 
 ]]></ST>
     </Implementation>
     <LineIds Name="PILS_DEVICES">
       <LineId Id="20" Count="0" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="36" Count="1" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="29" Count="0" />
+      <LineId Id="28" Count="1" />
       <LineId Id="14" Count="0" />
       <LineId Id="30" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

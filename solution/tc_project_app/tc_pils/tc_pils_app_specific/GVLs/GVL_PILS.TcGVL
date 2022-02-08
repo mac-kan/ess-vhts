@@ -17,34 +17,24 @@
     stVariable2 AT %MB108: ST_1202;
 
         //Axis #1 (x stage)
-    stMotorM1       AT %MB128: ST_5008;
-    fbMotorM1: FB_5008_Axis := (nPILSDeviceNumber := 3);
+    stMotorM1       AT %MB128: ST_5010;
+    fbMotorM1: FB_5010_Axis := (nPILSDeviceNumber := 3);
     stMotorM1Param: ST_AxisParameters;
-    stMotorM1ErrorID AT %MB144: ST_1202;
     stMotorM1EncoderRaw AT %MB148: ST_1202;
+	stMotor1Temp AT %MB184: ST_1302;
 
-        //Axis #2
-
-    stMotorM2 AT %MB152: ST_5010;
-    fbMotorM2: FB_5010_Axis := (nPILSDeviceNumber := 5);
-    stMotorM2Param: ST_AxisParameters;
-    stMotor2Temp AT %MB184: ST_1302;
-    stMotorM2EncoderRaw AT %MB188: ST_1202;
 *)
 
 // Array of Devices
 // Modify the array to fit the number of devices you have
 // nUnit codes: mm = 16xfd04, degrees = 16x000C, Celsius =16x0009, Kelvin 16x0008
 
-    astDevices: ARRAY [1..8] OF ST_DeviceInfo :=[
+    astDevices: ARRAY [1..5] OF ST_DeviceInfo :=[
         (nTypCode := 16#1201, sName := 'Variable1', nOffset := 104),
         (nTypCode := 16#1202, sName := 'Variable2', nOffset := 108),
-        (nTypCode := 16#5008, sName := 'M1 Example', nOffset := 128, nUnit := 16#FD04, asAUX := [('notHomed'),('inTargetPos'),('enabled'),('localMode')], nFlags := 1, sDESC := 'Motor M1'),
-        (nTypCode := 16#1202, sName := 'errorID', nOffset := 144),
+		(nTypCode := 16#5010, sName := 'M1 Example', nOffset := 152, nUnit := 16#FD04, asAUX := [(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),('InterlockFwd'),('InterlockBwd'),('localMode'),('inTargetPos'),('homeSensor'),('notHomed'),('enabled')], nFlags := 1),
         (nTypCode := 16#1202, sName := 'encoder1Raw', nOffset := 148),
-        (nTypCode := 16#5010, sName := 'M2 Example', nOffset := 152, nUnit := 16#FD04, asAUX := [(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),('InterlockFwd'),('InterlockBwd'),('localMode'),('inTargetPos'),('homeSensor'),('notHomed'),('enabled')], nFlags := 1),
-        (nTypCode := 16#1302, sName := 'Temp#2', nOffset := 184, nUnit := 16#0009),
-        (nTypCode := 16#1202, sName := 'encoder2Raw', nOffset := 188)];
+        (nTypCode := 16#1302, sName := 'Temp#1', nOffset := 184, nUnit := 16#0009)];
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
