@@ -3,7 +3,7 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{ee657b55-fb39-4eeb-bc2b-4bd76de980ae}</ProjectGuid>
+    <ProjectGuid>{fb261665-fd20-4bf2-97f8-2854c82b752d}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <Name>tc_project_app</Name>
     <ProgramVersion>3.1.4023.0</ProgramVersion>
@@ -31,13 +31,13 @@
     <Compile Include="PlcTaskCom.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Application Specific\Applications\Application_Template.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Application_Specific\Applications\Pneumatics_Template.TcPOU">
+    <Compile Include="POUs\Application_Specific\Applications\Application_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Application_Specific\Axes\Axis_Template.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Application_Specific\Axes\Pneumatics_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
@@ -204,7 +204,7 @@
     <Compile Include="tc_pils\tc_pils_generic\POUs\COMM.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_pils\tc_pils_generic\POUs\PILS_device_types\FB_5008_Axis.TcPOU">
+    <Compile Include="tc_pils\tc_pils_generic\POUs\PILS_device_types\FB_5010_Axis.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Visualization Manager.TcVMO">
@@ -214,8 +214,6 @@
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-    <Folder Include="POUs\Application Specific" />
-    <Folder Include="POUs\Application Specific\Applications" />
     <Folder Include="POUs\Application_Specific" />
     <Folder Include="POUs\Application_Specific\Applications" />
     <Folder Include="POUs\Application_Specific\Axes" />
