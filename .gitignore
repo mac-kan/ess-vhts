@@ -19,3 +19,4 @@ tools/linux/ADS/
 tools/linux/getADSState/getADSState.bin
 _Config/NC/Axes
 _Config/IO
+.vs/
