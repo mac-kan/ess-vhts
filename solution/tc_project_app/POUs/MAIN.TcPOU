@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
   <POU Name="MAIN" Id="{33eb6f49-7781-4211-a70b-87ada6d80cb7}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -19,7 +19,7 @@ VAR
     iAxes : UINT; //index for for loops in Position recovery actions
     afbReadEncRefSys: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_ReadParameter;
     afbRestorePosition: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_SetPosition;
-    fbGetDeviceIdentification: FB_GetDeviceIdentification;
+    fbGetDeviceIdentification: FB_GetDeviceIdentificationEx;
 END_VAR
 
 VAR PERSISTENT
