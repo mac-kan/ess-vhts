@@ -16,6 +16,7 @@
     <Released>false</Released>
     <CompilerVersion>
     </CompilerVersion>
+    <StorageProfile>Active</StorageProfile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GlobalTextList.TcGTLO">
