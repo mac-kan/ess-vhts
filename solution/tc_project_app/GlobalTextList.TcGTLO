@@ -161,6 +161,21 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"886"</v>
+              <v n="TextDefault">"bPowerSwitches1"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"87"</v>
+              <v n="TextDefault">"bPowerSwitchesAxis1"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"161"</v>
+              <v n="TextDefault">"bPowerSwitchesAxis2"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"963"</v>
               <v n="TextDefault">"bPSSPermit"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -253,6 +268,11 @@
             <o>
               <v n="TextID">"109"</v>
               <v n="TextDefault">"English"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1004"</v>
+              <v n="TextDefault">"eReadParameter"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
