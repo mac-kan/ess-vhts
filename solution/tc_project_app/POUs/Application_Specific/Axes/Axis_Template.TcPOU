@@ -5,7 +5,7 @@
 VAR
 //Outputs: Power for Limit switches, Home Sensors, etc.
     bPowerSwitchesAxis1 AT %Q*: BOOL:= TRUE;
-	bPowerSwitchesAxis2 AT %Q*: BOOL:= TRUE;
+    bPowerSwitchesAxis2 AT %Q*: BOOL:= TRUE;
 
 
 //Hardware interlocks

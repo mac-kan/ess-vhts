@@ -163,6 +163,9 @@
     <Compile Include="tc_pils\tc_pils_generic\DUTs\E_PILS_ParamControl.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tc_pils\tc_pils_generic\DUTs\E_PILS_ParamControlCmd.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_pils\tc_pils_generic\DUTs\E_PILS_State.TcDUT">
       <SubType>Code</SubType>
     </Compile>

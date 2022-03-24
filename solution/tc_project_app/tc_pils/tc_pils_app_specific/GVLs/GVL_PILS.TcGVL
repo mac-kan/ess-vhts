@@ -10,9 +10,9 @@
 //PILS Devices
 //First available memory area for PILS devices is 104. 64-99 is used by the indexer
 //Run the python script "check_fix_gvl_pils.py" to check that the PILS devices have a correct memory allocation
-	
-	//Axis #1                  Pils-device typ
-    stMotorM1       AT %MB176: ST_5010;
+
+    //Axis #1                  Pils-device typ
+    stMotorM1       AT %MB104: ST_5010;
     fbMotorM1: FB_5010_Axis := (nPILSDeviceNumber := 1);
     stMotorM1Param: ST_AxisParameters := (eMicrostepsPermission := E_Permission.eHidden,
                                           eResolutionPermission := E_Permission.eHidden,
@@ -36,7 +36,7 @@
 // nUnit codes: mm = 16xfd04, degrees = 16x000C, Celsius =16x0009, Kelvin 16x0008
 
     astDevices: ARRAY [1..1] OF ST_DeviceInfo :=[
-		(nTypCode := 16#5010, sName := 'M1 Lower', nOffset := 152, nUnit := 16#FD04, asAUX := [(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),('InterlockFwd'),('InterlockBwd'),('localMode'),('inTargetPos'),('homeSensor'),('notHomed'),('enabled')], nFlags := 1),
+        (nTypCode := 16#5010, sName := 'M1 Lower', nOffset := 104, nUnit := 16#FD04, asAUX := [(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),('InterlockFwd'),('InterlockBwd'),('localMode'),('inTargetPos'),('homeSensor'),('notHomed'),('enabled')], nFlags := 1)
         ];
 END_VAR]]></Declaration>
   </GVL>
