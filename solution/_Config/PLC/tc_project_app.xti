@@ -1085,6 +1085,10 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Outputs^Axis_Template.bPowerSwitchesAxis1" VarB="DIG Outputs^Channel 1^Output" Size="1"/>
 				<Link VarA="PlcTask Outputs^Axis_Template.bPowerSwitchesAxis2" VarB="DIG Outputs^Channel 5^Output" Size="1"/>
 			</OwnerB>
+			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
+				<Link VarA="PlcTask Inputs^GVL.astAxes[1].Axis.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^GVL.astAxes[1].Axis.PlcToNc" VarB="Inputs^FromPlc"/>
+			</OwnerB>
 		</OwnerA>
 	</Mappings>
 </TcSmItem>
