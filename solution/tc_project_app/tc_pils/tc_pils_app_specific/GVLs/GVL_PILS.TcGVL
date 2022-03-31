@@ -30,13 +30,34 @@
                                           eEncoderScalingNumeratorPermission := E_Permission.eWrite,
                                           eEncoderScalingDenominatorPermission := E_Permission.eWrite,
                                           eMaximumVelocityPermission := E_Permission.eWrite);
+										  
+	//Axis #2                  Pils-device typ
+    stMotorM2       AT %MB136: ST_5010;
+    fbMotorM2: FB_5010_Axis := (nPILSDeviceNumber := 2);
+    stMotorM2Param: ST_AxisParameters := (eMicrostepsPermission := E_Permission.eHidden,
+                                          eResolutionPermission := E_Permission.eHidden,
+                                          eAccelerationPermission := E_Permission.eWrite,
+                                          eHomePositionPermission := E_Permission.eWrite,
+                                          eHomingVelocityPermission := E_Permission.eWrite,
+                                          eLagErrorPermission := E_Permission.eWrite,
+                                          eTargetPositionWindowPermission := E_Permission.eWrite,
+                                          eUserMaxPermission := E_Permission.eWrite,
+                                          eUserMinPermission := E_Permission.eWrite,
+                                          eVelocityPermission := E_Permission.eWrite,
+                                          eSoftPosMinimumLimitEnablePermission := E_Permission.eWrite,
+                                          eSoftPosMaximumLimitEnablePermission := E_Permission.eWrite,
+                                          eHomeSequencePermission := E_Permission.eWrite,
+                                          eEncoderScalingNumeratorPermission := E_Permission.eWrite,
+                                          eEncoderScalingDenominatorPermission := E_Permission.eWrite,
+                                          eMaximumVelocityPermission := E_Permission.eWrite);
 
 // Array of Devices
 // Modify the array to fit the number of devices you have
 // nUnit codes: mm = 16xfd04, degrees = 16x000C, Celsius =16x0009, Kelvin 16x0008
 
-    astDevices: ARRAY [1..1] OF ST_DeviceInfo :=[
-        (nTypCode := 16#5010, sName := 'M1 Lower', nOffset := 104, nUnit := 16#FD04, asAUX := [(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),('InterlockFwd'),('InterlockBwd'),('localMode'),('inTargetPos'),('homeSensor'),('notHomed'),('enabled')], nFlags := 1)
+    astDevices: ARRAY [1..2] OF ST_DeviceInfo :=[
+        (nTypCode := 16#5010, sName := 'M1 Lower', nOffset := 104, nUnit := 16#FD04, asAUX := [(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),('InterlockFwd'),('InterlockBwd'),('localMode'),('inTargetPos'),('homeSensor'),('notHomed'),('enabled')], nFlags := 1),
+		(nTypCode := 16#5010, sName := 'M2 Higher', nOffset := 136, nUnit := 16#FD04, asAUX := [(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),(''),('InterlockFwd'),('InterlockBwd'),('localMode'),('inTargetPos'),('homeSensor'),('notHomed'),('enabled')], nFlags := 1)
         ];
 END_VAR]]></Declaration>
   </GVL>

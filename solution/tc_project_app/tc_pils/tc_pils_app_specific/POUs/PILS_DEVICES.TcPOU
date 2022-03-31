@@ -9,6 +9,7 @@ END_VAR
       <ST><![CDATA[//Interface between PILS and AXIS
 //Example code of how to link the axis and PILS:
 fbMotorM1(stAxisStruct:= astAxes[1], stDeviceStructPILS:= stMotorM1, stAxisPar:= stMotorM1Param);
+fbMotorM2(stAxisStruct:= astAxes[2], stDeviceStructPILS:= stMotorM2, stAxisPar:= stMotorM2Param);
 //stMotor1Temp.fValue := Axis_1.fMotTemp1;
 //stMotorM1EncoderRaw.nValue := nEncoderValueAxis1;
 
@@ -18,6 +19,7 @@ fbMotorM1(stAxisStruct:= astAxes[1], stDeviceStructPILS:= stMotorM1, stAxisPar:=
     <LineIds Name="PILS_DEVICES">
       <LineId Id="20" Count="0" />
       <LineId Id="28" Count="1" />
+      <LineId Id="34" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="30" Count="0" />
       <LineId Id="11" Count="1" />
