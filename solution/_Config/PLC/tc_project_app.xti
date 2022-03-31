@@ -968,18 +968,8 @@ External Setpoint Generation:
 		<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="tc_project_app\tc_project_app.tmc">
 			<Name>tc_project_app Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
-			<Vars VarGrpType="1" ContextId="1" AreaNo="16">
-				<Name>PlcTask Inputs</Name>
-				<Var>
-					<Name>GVL.astAxes[1].stStatus.nEncoderRawCounter</Name>
-					<Comment><![CDATA[Raw encoder counter value]]></Comment>
-					<Type>UDINT</Type>
-				</Var>
-				<Var>
-					<Name>GVL.astAxes[1].stStatus.nStepperDriveCounter</Name>
-					<Comment><![CDATA[Raw internal counter from stepper drive]]></Comment>
-					<Type>UDINT</Type>
-				</Var>
+			<Vars VarGrpType="1">
+				<Name>PlcTaskCom Inputs</Name>
 				<Var>
 					<Name>GVL.astAxes[1].stInputs.bLimitFwd</Name>
 					<Type>BOOL</Type>
@@ -994,6 +984,32 @@ External Setpoint Generation:
 					<Type>BOOL</Type>
 				</Var>
 				<Var>
+					<Name>GVL.astAxes[2].stInputs.bLimitFwd</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL.astAxes[2].stInputs.bLimitBwd</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL.astAxes[2].stInputs.bHomeSensor</Name>
+					<Comment><![CDATA[Reference siganl for homing]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+			</Vars>
+			<Vars VarGrpType="1" ContextId="1" AreaNo="16">
+				<Name>PlcTask Inputs</Name>
+				<Var>
+					<Name>GVL.astAxes[1].stStatus.nEncoderRawCounter</Name>
+					<Comment><![CDATA[Raw encoder counter value]]></Comment>
+					<Type>UDINT</Type>
+				</Var>
+				<Var>
+					<Name>GVL.astAxes[1].stStatus.nStepperDriveCounter</Name>
+					<Comment><![CDATA[Raw internal counter from stepper drive]]></Comment>
+					<Type>UDINT</Type>
+				</Var>
+				<Var>
 					<Name>GVL.astAxes[1].Axis.NcToPlc</Name>
 					<Type GUID="{10036166-C9D3-404B-BDD3-323034AAA7F4}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 				</Var>
@@ -1006,19 +1022,6 @@ External Setpoint Generation:
 					<Name>GVL.astAxes[2].stStatus.nStepperDriveCounter</Name>
 					<Comment><![CDATA[Raw internal counter from stepper drive]]></Comment>
 					<Type>UDINT</Type>
-				</Var>
-				<Var>
-					<Name>GVL.astAxes[2].stInputs.bLimitFwd</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>GVL.astAxes[2].stInputs.bLimitBwd</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>GVL.astAxes[2].stInputs.bHomeSensor</Name>
-					<Comment><![CDATA[Reference siganl for homing]]></Comment>
-					<Type>BOOL</Type>
 				</Var>
 				<Var>
 					<Name>GVL.astAxes[2].Axis.NcToPlc</Name>
@@ -1074,12 +1077,12 @@ External Setpoint Generation:
 	<Mappings>
 		<OwnerA Name="tc_project_app Instance">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 2 (EL1808)">
-				<Link VarA="PlcTask Inputs^GVL.astAxes[1].stInputs.bHomeSensor" VarB="Channel 3^Input" Size="1"/>
-				<Link VarA="PlcTask Inputs^GVL.astAxes[1].stInputs.bLimitBwd" VarB="Channel 2^Input" Size="1"/>
-				<Link VarA="PlcTask Inputs^GVL.astAxes[1].stInputs.bLimitFwd" VarB="Channel 1^Input" Size="1"/>
-				<Link VarA="PlcTask Inputs^GVL.astAxes[2].stInputs.bHomeSensor" VarB="Channel 7^Input" Size="1"/>
-				<Link VarA="PlcTask Inputs^GVL.astAxes[2].stInputs.bLimitBwd" VarB="Channel 6^Input" Size="1"/>
-				<Link VarA="PlcTask Inputs^GVL.astAxes[2].stInputs.bLimitFwd" VarB="Channel 5^Input" Size="1"/>
+				<Link VarA="PlcTaskCom Inputs^GVL.astAxes[1].stInputs.bHomeSensor" VarB="Channel 3^Input" Size="1"/>
+				<Link VarA="PlcTaskCom Inputs^GVL.astAxes[1].stInputs.bLimitBwd" VarB="Channel 2^Input" Size="1"/>
+				<Link VarA="PlcTaskCom Inputs^GVL.astAxes[1].stInputs.bLimitFwd" VarB="Channel 1^Input" Size="1"/>
+				<Link VarA="PlcTaskCom Inputs^GVL.astAxes[2].stInputs.bHomeSensor" VarB="Channel 7^Input" Size="1"/>
+				<Link VarA="PlcTaskCom Inputs^GVL.astAxes[2].stInputs.bLimitBwd" VarB="Channel 6^Input" Size="1"/>
+				<Link VarA="PlcTaskCom Inputs^GVL.astAxes[2].stInputs.bLimitFwd" VarB="Channel 5^Input" Size="1"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 3 (EL2819)">
 				<Link VarA="PlcTask Outputs^Axis_Template.bPowerSwitchesAxis1" VarB="DIG Outputs^Channel 1^Output" Size="1"/>
@@ -1088,6 +1091,10 @@ External Setpoint Generation:
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
 				<Link VarA="PlcTask Inputs^GVL.astAxes[1].Axis.NcToPlc" VarB="Outputs^ToPlc"/>
 				<Link VarA="PlcTask Outputs^GVL.astAxes[1].Axis.PlcToNc" VarB="Inputs^FromPlc"/>
+			</OwnerB>
+			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 2">
+				<Link VarA="PlcTask Inputs^GVL.astAxes[2].Axis.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^GVL.astAxes[2].Axis.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 		</OwnerA>
 	</Mappings>
