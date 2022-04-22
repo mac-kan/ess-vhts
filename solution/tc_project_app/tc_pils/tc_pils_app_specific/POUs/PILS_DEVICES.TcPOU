@@ -7,23 +7,26 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//Interface between PILS and AXIS
-//Example code of how to link the axis and PILS:
+//Example code of how to link the axis and PILS
 fbMotorM1(stAxisStruct:= astAxes[1], stDeviceStructPILS:= stMotorM1, stAxisPar:= stMotorM1Param);
 fbMotorM2(stAxisStruct:= astAxes[2], stDeviceStructPILS:= stMotorM2, stAxisPar:= stMotorM2Param);
+stPowerSwitchesAxis1.nValue:= BOOL_TO_INT(Axis_Template.bPowerSwitchesAxis1);
+stPowerSwitchesAxis2.nValue:= BOOL_TO_INT(Axis_Template.bPowerSwitchesAxis2);
+//stPowerSwitchesAxis1Ctr.nCurrentValue:= BOOL_TO_INT(Axis_Template.bPowerSwitchesAxis1);
+//stPowerSwitchesAxis1Ctr.nTargetValue:= BOOL_TO_INT(Axis_Template.bPowerSwitchesAxis1);
+
 //stMotor1Temp.fValue := Axis_1.fMotTemp1;
-//stMotorM1EncoderRaw.nValue := nEncoderValueAxis1;
-
-
-]]></ST>
+//stMotorM1EncoderRaw.nValue := nEncoderValueAxis1;]]></ST>
     </Implementation>
     <LineIds Name="PILS_DEVICES">
       <LineId Id="20" Count="0" />
-      <LineId Id="28" Count="1" />
-      <LineId Id="34" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="47" Count="1" />
       <LineId Id="14" Count="0" />
       <LineId Id="30" Count="0" />
-      <LineId Id="11" Count="1" />
-      <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
