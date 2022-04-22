@@ -30,10 +30,15 @@
 			<Device File="Device 1 (EtherCAT).xti" Id="1"/>
 			<Device File="Device 4 (COM Port).xti" Id="4"/>
 		</Io>
+		<SymbolWatch>
+			<Variable>TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 4 (EL5002)^SSI Inputs Channel 1^Counter value</Variable>
+		</SymbolWatch>
 	</Project>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-0020-0304-1000-040320000403}" Id="#x02030010"/>
-		<MappingInfo Identifier="{00000000-2042-0850-4120-500841000403}" Id="#x02030020"/>
+		<MappingInfo Identifier="{00000000-2041-0850-4020-500841000403}" Id="#x02030020"/>
+		<MappingInfo Identifier="{00000000-2042-0850-4120-500852000403}" Id="#x02030040"/>
 		<MappingInfo Identifier="{05000010-2042-0850-1000-040341205008}" Id="#x02030030" Watchdog="14000000040000000400000004000000"/>
+		<MappingInfo Identifier="{08502042-0020-0304-4020-500820000403}" Id="#x02030050" Watchdog="00000000000000000000000000000000"/>
 	</Mappings>
 </TcSmProject>

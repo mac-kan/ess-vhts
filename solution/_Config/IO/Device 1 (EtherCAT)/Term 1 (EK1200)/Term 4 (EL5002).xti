@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.22" ClassName="CFlbTermDef" SubType="9099">
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.25" ClassName="CFlbTermDef" SubType="9099">
 	<DataTypes>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000009}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..8] OF BIT</Name>
+			<Name GUID="{18071995-0000-0000-0000-002000000009}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..8] OF BIT</Name>
 			<BitSize>9</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
 			<ArrayInfo>
@@ -30,28 +30,28 @@
 			<DcMode>4443494e00000000000000000000000044432d53796e6368726f6e2028696e70757420626173656429000000000000000000000000000000983a0000000000070100000000000000000001000000000000000000000000000000000000000000</DcMode>
 			<MBoxUserCmdData>02000300090000000000000003000000000000000000000000000000000000002082f001010000000000</MBoxUserCmdData>
 			<Pdo Name="SSI Inputs Channel 1" Index="#x1a00" Flags="#x0010" SyncMan="3">
-				<Entry Name="Status__Data error" Index="#x6000" Sub="#x01">
+				<Entry Name="Data error" Index="#x6000" Sub="#x01">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Status__Frame error" Index="#x6000" Sub="#x02">
+				<Entry Name="Frame error" Index="#x6000" Sub="#x02">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Status__Power failure" Index="#x6000" Sub="#x03">
+				<Entry Name="Power failure" Index="#x6000" Sub="#x03">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Status__Data mismatch" Index="#x6000" Sub="#x04">
+				<Entry Name="Data mismatch" Index="#x6000" Sub="#x04">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Status__">
+				<Entry>
 					<Type GUID="{18071995-0000-0000-0000-002000000009}">ARRAY [0..8] OF BIT</Type>
 				</Entry>
-				<Entry Name="Status__Sync error" Index="#x6000" Sub="#x0e">
+				<Entry Name="Sync error" Index="#x6000" Sub="#x0e">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Status__TxPDO State" Index="#x6000" Sub="#x0f">
+				<Entry Name="TxPDO State" Index="#x6000" Sub="#x0f">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Status__TxPDO Toggle" Index="#x6000" Sub="#x10">
+				<Entry Name="TxPDO Toggle" Index="#x6000" Sub="#x10">
 					<Type>BIT</Type>
 				</Entry>
 				<Entry Name="Counter value" Index="#x6000" Sub="#x11">
@@ -59,28 +59,28 @@
 				</Entry>
 			</Pdo>
 			<Pdo Name="SSI Inputs Channel 2" Index="#x1a01" Flags="#x0010" SyncMan="3">
-				<Entry Name="Status__Data error" Index="#x6010" Sub="#x01">
+				<Entry Name="Data error" Index="#x6010" Sub="#x01">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Status__Frame error" Index="#x6010" Sub="#x02">
+				<Entry Name="Frame error" Index="#x6010" Sub="#x02">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Status__Power failure" Index="#x6010" Sub="#x03">
+				<Entry Name="Power failure" Index="#x6010" Sub="#x03">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Status__Data mismatch" Index="#x6010" Sub="#x04">
+				<Entry Name="Data mismatch" Index="#x6010" Sub="#x04">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Status__">
+				<Entry>
 					<Type GUID="{18071995-0000-0000-0000-002000000009}">ARRAY [0..8] OF BIT</Type>
 				</Entry>
-				<Entry Name="Status__Sync error" Index="#x6010" Sub="#x0e">
+				<Entry Name="Sync error" Index="#x6010" Sub="#x0e">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Status__TxPDO State" Index="#x6010" Sub="#x0f">
+				<Entry Name="TxPDO State" Index="#x6010" Sub="#x0f">
 					<Type>BIT</Type>
 				</Entry>
-				<Entry Name="Status__TxPDO Toggle" Index="#x6010" Sub="#x10">
+				<Entry Name="TxPDO Toggle" Index="#x6010" Sub="#x10">
 					<Type>BIT</Type>
 				</Entry>
 				<Entry Name="Counter value" Index="#x6010" Sub="#x11">

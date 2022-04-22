@@ -6,14 +6,20 @@ VAR
 //Outputs: Power for Limit switches, Home Sensors, etc.
     bPowerSwitchesAxis1 AT %Q*: BOOL:= TRUE;
     bPowerSwitchesAxis2 AT %Q*: BOOL:= TRUE;
-
-
+	bPowerEncAxis1 AT %Q*: BOOL:=TRUE;
+	bPowerEncAxis2 AT %Q*: BOOL:=TRUE;
+	
 //Hardware interlocks
     //bInterlockFwdOK AT %I*: BOOL;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//Initial parameters of an Axis
+      <ST><![CDATA[//Axis_Template.bPowerSwitchesAxis1:=INT_TO_BOOL(GVL_PILS.stPowerSwitchesAxis1Ctr.nTargetValue);  //allows EPICS to control
+
+
+
+//Initial parameters of an Axis
 (*IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
     //Initial default values:
     GVL.astAxes[1].stConfig.eHomeSeq := 0;
@@ -27,6 +33,9 @@ Eg. GVL.astAxes[x].stControl.bInterlockFwd := NOT bInterlockFwdOK;*)
 ]]></ST>
     </Implementation>
     <LineIds Name="Axis_Template">
+      <LineId Id="54" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="89" Count="1" />
       <LineId Id="20" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="13" Count="0" />

@@ -997,6 +997,18 @@ External Setpoint Generation:
 					<Type>BOOL</Type>
 				</Var>
 			</Vars>
+			<Vars VarGrpType="2" AreaNo="1">
+				<Name>PlcTaskCom Outputs</Name>
+				<Var>
+					<Name>Axis_Template.bPowerSwitchesAxis1</Name>
+					<Comment><![CDATA[Outputs: Power for Limit switches, Home Sensors, etc.]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Axis_Template.bPowerSwitchesAxis2</Name>
+					<Type>BOOL</Type>
+				</Var>
+			</Vars>
 			<Vars VarGrpType="1" ContextId="1" AreaNo="16">
 				<Name>PlcTask Inputs</Name>
 				<Var>
@@ -1031,12 +1043,11 @@ External Setpoint Generation:
 			<Vars VarGrpType="2" ContextId="1" AreaNo="17">
 				<Name>PlcTask Outputs</Name>
 				<Var>
-					<Name>Axis_Template.bPowerSwitchesAxis1</Name>
-					<Comment><![CDATA[Outputs: Power for Limit switches, Home Sensors, etc.]]></Comment>
+					<Name>Axis_Template.bPowerEncAxis1</Name>
 					<Type>BOOL</Type>
 				</Var>
 				<Var>
-					<Name>Axis_Template.bPowerSwitchesAxis2</Name>
+					<Name>Axis_Template.bPowerEncAxis2</Name>
 					<Type>BOOL</Type>
 				</Var>
 				<Var>
@@ -1085,8 +1096,12 @@ External Setpoint Generation:
 				<Link VarA="PlcTaskCom Inputs^GVL.astAxes[2].stInputs.bLimitFwd" VarB="Channel 5^Input" Size="1"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 3 (EL2819)">
-				<Link VarA="PlcTask Outputs^Axis_Template.bPowerSwitchesAxis1" VarB="DIG Outputs^Channel 1^Output" Size="1"/>
-				<Link VarA="PlcTask Outputs^Axis_Template.bPowerSwitchesAxis2" VarB="DIG Outputs^Channel 5^Output" Size="1"/>
+				<Link VarA="PlcTaskCom Outputs^Axis_Template.bPowerSwitchesAxis1" VarB="DIG Outputs^Channel 1^Output" Size="1"/>
+				<Link VarA="PlcTaskCom Outputs^Axis_Template.bPowerSwitchesAxis2" VarB="DIG Outputs^Channel 5^Output" Size="1"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 5 (EL2014)">
+				<Link VarA="PlcTask Outputs^Axis_Template.bPowerEncAxis1" VarB="DIG Outputs^Channel 1^Output" Size="1"/>
+				<Link VarA="PlcTask Outputs^Axis_Template.bPowerEncAxis2" VarB="DIG Outputs^Channel 2^Output" Size="1"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
 				<Link VarA="PlcTask Inputs^GVL.astAxes[1].Axis.NcToPlc" VarB="Outputs^ToPlc"/>
