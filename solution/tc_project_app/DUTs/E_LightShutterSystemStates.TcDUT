@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="E_LightShutterSystemStates" Id="{b792e39b-a538-4705-a28b-6988a06d98b3}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_LightShutterSystemStates :
+(
+    Init := 0,
+	ClosedOff,
+	ClosedStandby,
+	Opening,
+	Open,
+	OpenToOpen,
+	Adjusting,
+	ResetZero,
+	Closing,
+	Maintenance,
+	SinglePortMaintenance_ClosedStandby,
+	SinglePortMaintenance_Opening,
+	SinglePortMaintenance_Open,
+	SinglePortMaintenance_Closing,
+	LSS_Maintenance,
+	Fault	
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

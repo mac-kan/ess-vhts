@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="NeutronFactoryStates" Id="{d43beee5-2cf4-48df-b5fd-a87d1d36e622}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM NeutronFactoryStates
+VAR
+//Define all necessary variables for your application
+	eNeutronFactoryState: E_NeutronFactoryStates := E_NeutronFactoryStates.Disabled;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE eNeutronFactoryState OF
+	
+	E_NeutronFactoryStates.Disabled:
+		GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := FALSE;
+	
+	
+	E_NeutronFactoryStates.Maintenance:
+		GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := FALSE;
+	
+	
+	E_NeutronFactoryStates.StartUp:
+		GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := FALSE;
+	
+	
+	E_NeutronFactoryStates.CoolingDown:
+		GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := FALSE;
+	
+	
+	E_NeutronFactoryStates.NotConfirmedReady:
+		GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := FALSE;
+	
+	
+	E_NeutronFactoryStates.ConfirmedReady:
+		GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := TRUE;
+		
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="NeutronFactoryStates">
+      <LineId Id="52" Count="24" />
+      <LineId Id="35" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="E_SeqRangePosStates" Id="{67307bd3-703c-46cc-a4ac-7ffde7e00591}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_SeqRangePosStates :
+(
+    INIT := 0,
+    CHECK_HOME_STATUS,
+    HOME_MOTOR,
+    CHECK_HOME_COMPLETE,
+    MOTOR_OPERATIONAL,
+	POS_ZERO,
+	POS_ONE,
+	POS_TWO,
+	POSITIONING,
+    CLEAR_CALIBRATION,
+    ERROR,
+    ERROR_RESET_AXES,
+    ERROR_RESET_CHECK
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

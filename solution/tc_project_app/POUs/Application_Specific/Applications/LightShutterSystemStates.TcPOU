@@ -1,0 +1,1268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="LightShutterSystemStates" Id="{e74b52d0-a3ab-400c-a63b-35c8320e25fb}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM LightShutterSystemStates
+VAR
+//Define all necessary variables for your application
+	eLightShutterSystemState: E_LightShutterSystemStates := E_LightShutterSystemStates.Init;
+	eNeutronFactoryState: E_NeutronFactoryStates := E_NeutronFactoryStates.Disabled;
+	eResetZeroInternal: E_ResetZero := E_ResetZero.INIT;
+	
+	bNeutronFactory_StartUp: BOOL;
+	i   :   UINT:=0;
+	//i2   :   UINT:=0;
+	bAxesDone: BOOL := FALSE;
+	bAxesHomed: BOOL := FALSE;
+	bInPos: BOOL;
+	bJogB: BOOL;
+	bJogF: BOOL;
+	bOpenToOpen: BOOL;
+	bNeutronFactory_CoolingDown: BOOL;
+	bClosedOff: BOOL; // Signal from MPS?
+	bBackLimitSwitch: BOOL;
+	bNeutronFactory_Maintenance: BOOL;
+	bMaintenancePermission: BOOL;
+	bMaintencancePerformed: BOOL;
+	bStartup : BOOL := TRUE;
+	lOldPos1 : LREAL;
+	lOldPos2 : LREAL;
+	lOldEnc1 : UDINT;
+	lOldEnc2 : UDINT;
+	bResetZero: BOOL;
+	bResetZeroDone: BOOL; // help variable inside state of ResetZero
+	fPosX : LREAL;
+	fPosY : LREAL;
+	fPosFocal : lREAL;
+	
+	nEncRollRot : UDINT;
+	nEncOldValue : UDINT;
+	//nEncCurValue AT %Q* : UDINT;
+	bEnablePower: BOOL;
+	ar_bDisabled: ARRAY [1..GVL_APP.nAXIS_NUM] OF BOOL;
+	ar_bPower: ARRAY [1..GVL_APP.nAXIS_NUM] OF BOOL;
+	
+	bClosedShutters: BOOL := FALSE;
+	bAllDisabled: BOOL := FALSE;
+	//FaultType   :   stFaultType;
+	//sErrorText : T_MaxString := '';
+	//sErrorTextNc : T_MaxString := '';
+	//strErrorText : DUT_ErrorText;
+	//fbRead : FB_ReadTcNcErrorAndDescription;
+	
+	
+	
+	bLSS_Open: BOOL;
+END_VAR
+
+VAR PERSISTENT
+	aSavedPos : ARRAY[1..GVL_APP.nAXIS_NUM] OF LREAL;
+	nEncCalcValue : LREAL;
+	//aSavedEnc : ARRAY[1..GVL_APP.nAXIS_NUM] OF UDINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[actRunMethods(); // Update status
+prgReadTcNcErrorAndDescription(); //Gets description of error codes and keeps them in mem
+//GVL.astAxes[1].stConfig.eRestorePosition := 1; // Currently only works for incremental encoder, not resolver. Easy fix.
+actFaults();
+
+// Could also run a general actPower() here, and only set a boolean in the state machine
+// true or not. This would also include a check if the device is disabled or if a specific
+// axis demands control. Maybe a general bool if power is allowed or not should be given
+// true or false in each state. Thus, if axis one requests power, but we are in closed off,
+// nothing will happen.
+
+
+///////////////////////////
+// *** Encoder roleover *** 
+//IF nEncOldValue<1000 AND GVL.astAxes[2].stStatus.nEncoderRawCounter > 30198988 THEN
+//	nEncRollRot := nEncRollRot - 1;
+//	nEncCalcValue := nEncRollRot*33554431-GVL.astAxes[2].Axis.
+	//TINC^NC-Task 1 SAF^Axes^Axis 2^Enc^Inputs^In^nDataIn1
+	//nEncCurValue;
+	
+	//GVL.astAxes[2].stConfig.eAxisParameters := E_AxisParameters.AxisEncoderOffset;
+	//GVL.astAxes[2].stControl.eCommand := E_MotionFunctions.eReadParameter;
+	//GVL.astAxes[2].stControl.bExecute := TRUE;
+	//nEncCalcValue := GVL.astAxes[2].stConfig.fReadAxisParameter;
+//END_IF
+/////////////////////////////
+
+IF bStartup THEN // First cycle setup - _TaskInfo[1].FirstCycle did not work, why?)
+	nEncRollRot := NOT nEncRollRot;
+	lOldPos1 := aSavedPos[1];
+	lOldPos2 := aSavedPos[2];
+	//lOldEnc1 := aSavedEnc[1];
+	//lOldEnc2 := aSavedEnc[2];
+	bStartup := FALSE;
+END_IF
+
+CASE eLightShutterSystemState OF
+
+	E_LightShutterSystemStates.Init:
+		// The homing should be performed in the RESET substate of OPEN	
+		// Maybe a requirement of being able to enter in the closed standby state 
+		// should be to first have homed everything manually? Alternatively,
+		// If not homed, the movement to first open could be performed by jogging
+		// until hitting the position switch.
+		// Homing can also be performed in Maintenance mode.
+	    
+		bEnablePower := TRUE;
+		actCascadePower();
+		actCascadeHoming();
+		IF _TaskInfo[1].CycleCount > 10000 AND bAxesHomed THEN
+			eLightShutterSystemState := E_LightShutterSystemStates.ClosedOff;
+			eNeutronFactoryState := E_NeutronFactoryStates.Disabled;
+		END_IF		
+	
+	E_LightShutterSystemStates.ClosedOff:
+		// All shutters closed, motor power off, brake on.
+
+		// To do: LS verification and fault handling.
+		
+		//IF NOT bAxesHomed THEN
+		//	actCascadeHoming();
+		//ELSE
+		bEnablePower := FALSE;
+		actCascadePower();
+		//END_IF
+		
+		IF  bLSS_Open AND bAxesDone THEN
+			eNeutronFactoryState := E_NeutronFactoryStates.StartUp;
+			eLightShutterSystemState := E_LightShutterSystemStates.ClosedStandby;
+		END_IF
+		
+		IF bNeutronFactory_Maintenance THEN
+			eLightShutterSystemState := E_LightShutterSystemStates.Maintenance;
+		END_IF
+	
+	
+	E_LightShutterSystemStates.ClosedStandby:
+		// Verification of all shutters closed, motor power on(?), brake on.
+		// To do: LS verification and fault handling.
+		
+		bEnablePower := FALSE; // Do motors really need to be energised here? No, only from PSS side.
+		actCascadePower();
+		
+		IF bLSS_Open THEN
+			eLightShutterSystemState := E_LightShutterSystemStates.Opening;
+			eNeutronFactoryState := E_NeutronFactoryStates.NotConfirmedReady;
+		END_IF
+		
+		IF NOT bLSS_Open AND bClosedShutters THEN
+			eLightShutterSystemState := E_LightShutterSystemStates.ClosedOff;
+			eNeutronFactoryState := E_NeutronFactoryStates.Disabled;
+		END_IF
+	
+	
+	E_LightShutterSystemStates.Opening:
+		// Resolver monitoring of shutter pos. LSS monitor time for event to happen.
+		// Motor power on. Brake off
+		// To do: Fault handling.
+		
+		//GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := TRUE;
+		//ar_bPower
+		bEnablePower := TRUE;
+		actCascadePower();
+		
+		//GVL.astAxes[1].stControl.bEnable := TRUE;
+		//GVL.astAxes[2].stControl.bEnable := TRUE;
+		
+		actCascadeOpening();
+		
+		IF bAxesDone AND bInPos AND (NOT bClosedShutters OR bAllDisabled) THEN 
+			// Also check bLSS_Open to be able to cancel Opening?
+			bEnablePower := FALSE;
+			actCascadePower();
+			//AND GVL.astAxes[1].stStatus.fActPosition = GVL.astAxes[1].stControl.fPosition
+			//AND GVL.astAxes[2].stStatus.fActPosition = GVL.astAxes[2].stControl.fPosition THEN // Also check positions?
+			eLightShutterSystemState := E_LightShutterSystemStates.Open; // Before transitioning, check NF?
+			eNeutronFactoryState := E_NeutronFactoryStates.ConfirmedReady; // Not needed for us - or needed if to confirm "Open"?
+		END_IF
+		
+	
+	E_LightShutterSystemStates.Open:
+		// Verification of all shutters open. Motor power off.
+		// Brake on. (Dependent of specific OPEN TO OPEN pos)
+		// To do: LS verification and fault handling.
+		
+		// Once inside here we allow individual control.  The question is if we allow the
+		// individual control also in previous mode, i.e. to allow e.g. to disable a
+		// certain beamline altogether. 
+		// The control within Open could be handle with that the enable/disable GUI button e.g.
+		// turns power on temporarily for that axis? Or should the enable button turn a bool in 
+		// an array TRUE / FALSE also here?
+		
+		(*IF GVL.astAxes[1].stStatus.bDone THEN
+			bEnablePower := FALSE;
+			actCascadePower();
+		END_IF*)
+		
+		
+		IF bJogB OR bJogF AND bLSS_Open THEN
+			eLightShutterSystemState := E_LightShutterSystemStates.Adjusting;
+		END_IF
+		
+		IF bOpenToOpen AND bLSS_Open THEN
+			eLightShutterSystemState := E_LightShutterSystemStates.OpenToOpen;
+		END_IF
+
+		IF bResetZero AND bLSS_Open THEN // Use with AX drive - Torque homing.
+			eLightShutterSystemState := E_LightShutterSystemStates.ResetZero;
+		END_IF
+		
+		IF NOT bLSS_Open THEN // THEN
+			eNeutronFactoryState := E_NeutronFactoryStates.CoolingDown;
+			eLightShutterSystemState := E_LightShutterSystemStates.Closing;
+		END_IF
+	
+	E_LightShutterSystemStates.OpenToOpen: // Remove substate and have as option in Open instead
+		// Substate of OPEN. 
+		// Shutter within open to open resolver pos ??
+		// Verification of open shutter switches for Heimdal, T-Rex and Magic.
+		// Motor power on, brake off. Scientists ask permission - ctrl room executes.
+		// To do: LS verification and fault handling.
+		
+		GVL.astAxes[2].stControl.bEnable := TRUE;
+		
+		IF GVL.astAxes[2].stStatus.bEnabled THEN
+			GVL.astAxes[2].stControl.fPosition := 50;
+			GVL.astAxes[2].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
+			GVL.astAxes[2].stControl.bExecute := TRUE;
+		END_IF
+		
+		IF GVL.astAxes[2].stStatus.bDone AND NOT bOpenToOpen THEN
+			eLightShutterSystemState := E_LightShutterSystemStates.Open;
+		END_IF
+		
+	
+	
+	E_LightShutterSystemStates.Adjusting:
+		// Verification of open shutter, switch in question.
+		// Switch cams open position +- 2 mm. Motor power on, brake off.
+		// To do: LS verification and fault handling.
+		
+		GVL.astAxes[1].stControl.bEnable := TRUE;
+		IF GVL.astAxes[1].stStatus.bEnabled THEN
+			GVL.astAxes[1].stControl.eCommand :=E_MotionFunctions.eJog;
+			GVL.astAxes[1].stControl.bJogBwd := bJogB AND GVL.astAxes[1].stStatus.fActPosition >= 90;
+			GVL.astAxes[1].stControl.bJogFwd := bJogF AND GVL.astAxes[1].stStatus.fActPosition <= 110;
+		END_IF
+		
+		IF NOT bJogB AND NOT bJogF THEN
+			eLightShutterSystemState := E_LightShutterSystemStates.Open;
+		END_IF
+	
+	
+	E_LightShutterSystemStates.ResetZero:
+		// Reset of resolver, top shutter pos against mechanical stop.
+		// Motor power on, brake off.
+		// To do: Implement sequence: Jog, ramp, torque. Fault handling.
+		CASE eResetZeroInternal OF
+			
+			E_ResetZero.INIT:
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := TRUE;
+				
+				IF GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bEnabled THEN
+					eResetZeroInternal := E_ResetZero.HOME_AXIS;
+				END_IF
+				
+			E_ResetZero.HOME_AXIS:
+				// CHANGE to HomeByTorque at top position.
+				//bAxesDone := FALSE;
+				GVL.astAxes[MAIN.hmiAxisSelection].stConfig.eHomeSeq := E_HomingRoutines.eHomeToLimit_Bwd;
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.eCommand := E_MotionFunctions.eHome;
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.bExecute := TRUE;				
+				
+				IF GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bDone AND NOT(GVL.astAxes[MAIN.hmiAxisSelection].stInputs.bLimitBwd) THEN
+					eResetZeroInternal := E_ResetZero.FIND_POS_ONE;
+				END_IF
+			
+			E_ResetZero.FIND_POS_ONE:
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eJog;
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.bJogFwd:= NOT(GVL.astAxes[MAIN.hmiAxisSelection].stInputs.bHomeSensor); // Can't prob. not use bHomeSensor later. But other I/O LS - change direction also?		
+				
+				IF GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bDone AND GVL.astAxes[MAIN.hmiAxisSelection].stInputs.bHomeSensor THEN
+					eResetZeroInternal := E_ResetZero.PREPARE_POS_ONE_X;
+				END_IF
+				
+			E_ResetZero.PREPARE_POS_ONE_X:
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.bJogBwd:= GVL.astAxes[MAIN.hmiAxisSelection].stInputs.bHomeSensor;
+				
+				IF GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bDone AND NOT(GVL.astAxes[MAIN.hmiAxisSelection].stInputs.bHomeSensor) THEN
+					eResetZeroInternal := E_ResetZero.RECORD_POS_ONE_X;
+				END_IF
+				
+			E_ResetZero.RECORD_POS_ONE_X:
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.fVelocity := 1;
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.bJogFwd := NOT(GVL.astAxes[MAIN.hmiAxisSelection].stInputs.bHomeSensor);
+				
+				IF GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bDone AND GVL.astAxes[MAIN.hmiAxisSelection].stInputs.bHomeSensor THEN
+					fPosX := GVL.astAxes[MAIN.hmiAxisSelection].stStatus.fActPosition;
+					eResetZeroInternal := E_ResetZero.PREPARE_POS_ONE_Y;
+				END_IF
+				
+			E_ResetZero.PREPARE_POS_ONE_Y:
+				
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.fVelocity := GVL.astAxes[MAIN.hmiAxisSelection].stConfig.fVelocityDefaultSlow;
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.bJogFwd := GVL.astAxes[MAIN.hmiAxisSelection].stInputs.bHomeSensor;
+				
+				IF GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bDone AND NOT(GVL.astAxes[MAIN.hmiAxisSelection].stInputs.bHomeSensor) THEN
+					eResetZeroInternal := E_ResetZero.RECORD_POS_ONE_Y;
+				END_IF
+				
+			E_ResetZero.RECORD_POS_ONE_Y:
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.bJogBwd := NOT(GVL.astAxes[MAIN.hmiAxisSelection].stInputs.bHomeSensor);
+				
+				IF GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bDone AND GVL.astAxes[MAIN.hmiAxisSelection].stInputs.bHomeSensor THEN
+					fPosY := GVL.astAxes[MAIN.hmiAxisSelection].stStatus.fActPosition;
+					// Calculate (x+y)/2
+					fPosFocal := (fPosX+fPosY)/2;
+					eResetZeroInternal := E_ResetZero.POSITIONING;
+				END_IF
+			
+			E_ResetZero.POSITIONING:
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.fPosition := fPosFocal;
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.bExecute := TRUE;
+				
+				// Either TON and then checn in IF
+				// OR new state: POSITIONING_ WAITING
+				// OR while loop
+				
+				IF GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bDone THEN
+					//eLightShutterSystemState := E_LightShutterSystemStates.Open;
+					bResetZero := FALSE;
+				END_IF
+		END_CASE
+				
+			
+		(*	
+		IF GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bEnabled AND NOT bResetZeroDone THEN
+			// CHANGE to homebytorque at top position.
+			GVL.astAxes[MAIN.hmiAxisSelection].stConfig.eHomeSeq := E_HomingRoutines.eHomeToLimit_Bwd;
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.eCommand := E_MotionFunctions.eHome;
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.bExecute := TRUE;
+		END_IF
+		*)
+		(*
+		IF GVL.astAxes[i].stStatus.bEnabled THEN
+			GVL.astAxes[i].stConfig.eHomeSeq := E_HomingRoutines.eHomeToLimit_Bwd;
+			GVL.astAxes[i].stControl.eCommand := E_MotionFunctions.eHome;
+			GVL.astAxes[i].stControl.bExecute := TRUE;
+		END_IF
+		*)
+		(*
+		IF GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bDone AND GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bHomed AND NOT GVL.astAxes[MAIN.hmiAxisSelection].stInputs.bLimitBwd THEN
+			bResetZeroDone := TRUE;
+		END_IF
+		*)
+		// Add sequence to find focal point of beamline optic(s)
+		(*
+		IF GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bEnabled AND bResetZeroDone THEN
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eJog;
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.bJogFwd:= GVL.astAxes[i].stInputs.bHomeSensor; // Can't prob. not use bHomeSensor later. But other I/O LS.,			
+			
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.fVelocity := 1;
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.bJogBwd:= NOT(GVL.astAxes[i].stInputs.bHomeSensor);
+			
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.bJogFwd := GVL.astAxes[i].stInputs.bHomeSensor;
+			// Save pos x
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.bJogFwd := NOT(GVL.astAxes[i].stInputs.bHomeSensor);
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.bJogBwd := NOT(GVL.astAxes[i].stInputs.bHomeSensor);
+			// Save pos y
+			
+			// Save focal point (x+y)/2
+			
+			// If only one beam optics, go to (x+y)/2.
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eMoveAbsolute;
+			//GVL.astAxes[MAIN.hmiAxisSelection].stControl.fPosition := (x+y)/2;
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.bExecute := TRUE;
+			
+			// If two beam optics, scan second focal point and save
+			
+			
+		END_IF
+		
+		IF GVL.astAxes[MAIN.hmiAxisSelection].stStatus.bEnabled AND bResetZeroDone THEN
+			//CHANGE to move to saved pos 1/2 depending on previous config.
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.fPosition := 100;
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.bExecute := TRUE;
+		END_IF*)
+		
+		IF NOT bResetZero THEN // Transitioning from state - need to check axis status? 
+			GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := FALSE;
+			eResetZeroInternal := E_ResetZero.INIT;
+			eLightShutterSystemState := E_LightShutterSystemStates.Open; // What should happen here?			
+			//bResetZeroDone := FALSE;
+		END_IF
+		
+		
+	E_LightShutterSystemStates.Closing:
+		// Resolver monitoring of shutter positions.
+		// LSS monitor time for event to happen. Motor power on, brake off
+		// To do: Fault handling.
+		
+		//GVL.astAxes[1].stControl.bEnable := TRUE;
+		//GVL.astAxes[2].stControl.bEnable := TRUE;
+		//actCascadeClosing();
+		bEnablePower := TRUE;
+		actCascadePower();
+		actCascadeClosing();
+		
+		IF bAxesDone AND bClosedShutters THEN
+			//This one is not safe to check OR bAllDisabled
+			eLightShutterSystemState := E_LightShutterSystemStates.ClosedStandby;
+	
+		END_IF
+		
+	
+		
+	E_LightShutterSystemStates.Maintenance:
+		// Verification of all shutters closed. Motor power off, brake on.
+		// As CLOSED OFF, but also administrative permission for port maintenance.
+		
+		GVL.astAxes[1].stControl.bEnable := FALSE;
+		GVL.astAxes[2].stControl.bEnable := FALSE;
+		
+		IF bMaintenancePermission THEN
+			eLightShutterSystemState := E_LightShutterSystemStates.SinglePortMaintenance_ClosedStandby;
+		END_IF
+		
+		
+	
+	
+	E_LightShutterSystemStates.SinglePortMaintenance_ClosedStandby:
+		//
+	
+		GVL.astAxes[1].stControl.bEnable := FALSE; // Do motors really need to be energised here?
+		GVL.astAxes[2].stControl.bEnable := FALSE;
+		
+		IF bMaintenancePermission THEN
+			eLightShutterSystemState := E_LightShutterSystemStates.SinglePortMaintenance_Opening;
+		END_IF
+		
+		IF bMaintencancePerformed THEN
+			eLightShutterSystemState := E_LightShutterSystemStates.Maintenance;
+		END_IF
+
+	
+	E_LightShutterSystemStates.SinglePortMaintenance_Opening:
+		// Single shutter opening during maintenance of shutter.
+		// Local control? Manual jogging? 
+		
+		GVL.astAxes[1].stControl.bEnable := TRUE;
+		GVL.astAxes[2].stControl.bEnable := TRUE;
+		//actMaintenanceOpening();
+		
+		IF bAxesDone AND bInPos THEN
+			eLightShutterSystemState := E_LightShutterSystemStates.SinglePortMaintenance_Open;
+		END_IF
+		
+		//IF bMaintenanceClo
+	
+
+	
+	E_LightShutterSystemStates.SinglePortMaintenance_Open:
+		// Single shutter open during maintenance of shutter.
+		// Local control?
+		
+		GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := FALSE;
+	
+	
+	
+	
+	E_LightShutterSystemStates.SinglePortMaintenance_Closing:
+		// Single shutter closing during maintenance of shutter.
+		// Local control?
+		
+		GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := FALSE;
+	
+
+
+	E_LightShutterSystemStates.LSS_Maintenance:
+		GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := FALSE;
+	
+
+
+	E_LightShutterSystemStates.Fault:
+		// Any LSS state machine fault. Two levels of severity: A and B.
+		
+		GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := FALSE;
+
+		
+END_CASE
+
+
+actSavePos();
+nEncOldValue := GVL.astAxes[2].stStatus.nEncoderRawCounter;
+
+// Read values from Axis.
+(*IF NOT GVL.astAxes[2].stStatus.bMoving THEN
+	GVL.astAxes[2].stConfig.eAxisParameters := E_AxisParameters.AxisEncoderOffset;
+	GVL.astAxes[2].stControl.eCommand := E_MotionFunctions.eReadParameter;
+	GVL.astAxes[2].stControl.bExecute := TRUE;
+	IF GVL.astAxes[2].stStatus.bDone THEN
+		nEncCalcValue := GVL.astAxes[2].stConfig.fReadAxisParameter;
+	END_IF
+END_IF*)]]></ST>
+    </Implementation>
+    <Action Name="actCascadeClosing" Id="{3aec288f-4a63-431d-829d-57a315513e67}">
+      <Implementation>
+        <ST><![CDATA[//Add some extra startup variable to add one drive after each 100 ms or something similar
+
+FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+	//IF GVL.astAxes[i].stStatus.fActPosition <> 0 THEN
+	//GVL.astAxes[i].stControl.bEnable := TRUE;
+	IF GVL.astAxes[i].stStatus.bEnabled THEN
+		
+		//GVL.astAxes[i].stControl.fPosition := 0;
+		//GVL.astAxes[i].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
+		//GVL.astAxes[i].stControl.bJogBwd := TRUE; //GVL.astAxes[i].stStatus.bBwEnabled;
+		//GVL.astAxes[i].stControl.bExecute := TRUE;
+		GVL.astAxes[i].stControl.eCommand:=E_MotionFunctions.eJog;
+		GVL.astAxes[i].stControl.bJogBwd:= GVL.astAxes[i].stStatus.bBwEnabled;
+		
+	END_IF
+	//END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="actCascadeHoming" Id="{c0a31c1a-9eae-41d8-861d-217a58b3dd55}">
+      <Implementation>
+        <ST><![CDATA[//Add some extra startup variable to add one drive after each 100 ms or something similar
+
+FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+	//IF NOT GVL.astAxes[i].stStatus.bHomed THEN
+		//GVL.astAxes[i].stControl.bEnable := TRUE;
+		IF GVL.astAxes[i].stStatus.bEnabled THEN
+			GVL.astAxes[i].stConfig.eHomeSeq := E_HomingRoutines.eHomeToLimit_Bwd;
+			GVL.astAxes[i].stControl.eCommand := E_MotionFunctions.eHome;
+			GVL.astAxes[i].stControl.bExecute := TRUE;
+		END_IF
+	//END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="actCascadeOpening" Id="{4c97e789-267b-4b79-a69b-5f26e1a5593c}">
+      <Implementation>
+        <ST><![CDATA[//Add some extra startup variable to add one drive after each 100 ms or something similar
+
+FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+	IF GVL.astAxes[i].stStatus.fActPosition <> 100 THEN
+		//GVL.astAxes[i].stControl.bEnable := TRUE;
+		IF GVL.astAxes[i].stStatus.bEnabled THEN
+			GVL.astAxes[i].stControl.fPosition := 100;
+			GVL.astAxes[i].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
+			GVL.astAxes[i].stControl.bExecute := TRUE;
+		END_IF
+	END_IF
+END_FOR
+
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="actCascadePower" Id="{dd240e48-c20e-4aec-85e5-64c3baa489bb}">
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+	//IF GVL.astAxes[i].stStatus.fActPosition <> 100 THEN
+	GVL.astAxes[i].stControl.bEnable := (bEnablePower AND NOT ar_bDisabled[i]); //OR XOR ar_bPower[i];
+	//END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="actFaults" Id="{977747f0-b936-4a6c-a020-dbc071546ad0}">
+      <Implementation>
+        <ST><![CDATA[// Actuator velocity: > 110 mm/s - B
+// Actuator stroke time out: > 30 s - A
+// Motor torque: > 21.5 Nm - B
+// Motor DC Voltage downwards movement: > 850 V - B
+// Motor DC Voltage upwards movement: > 600 V - B
+// Motor DC Power upwards movement: > 380 W - B
+// Applied hold brake position indication: Any feedback signal deviating from what is expected - B
+// Resolver position compared with Closed Shutter Indications: Deviation 0.5 mm - A
+// Deviation: Resolver position compared with Open Shutter LO: Deviation 2.2 mm (adjustment range +-2 mm) - A
+// Deviation: Resolver position compared with Open Shutter HI: Deviation 2.2 mm (adjustment range +-2 mm) - A
+// Motor temperature: > 50 C - B
+// Servo drive temperature: > 50 C - B
+// Homing sequence not fulfilled timeout > 30 s - B
+
+// Should a statemachine take care of these cases? eFaults.A/B?]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="actRunMethods" Id="{e9c6596f-994e-4ede-8713-4401c6c76788}">
+      <Implementation>
+        <ST><![CDATA[//checkAxesEnabled(bOutput => bAxesEnabled);
+//checkBladesHomed(bOutput => bBladesHomed);
+
+checkVirtualHomed(bOutput => bAxesHomed);
+checkAxesDone(bOutput => bAxesDone);
+checkPos(bOutput => bInPos);
+checkClosedLimitSwitches(bOutput => bClosedShutters);
+checkAllDisabled(bOutput => bAllDisabled);
+//checkBladesCoupled(bOutput => bBladesCoupled);
+//checkBladesUncoupled(bOutput => bBladesUncoupled);
+//checkAllAxisErrors(bOutput => bAxisErrorsPresent);
+//checkErrorState(bOutput => bFunctionInErrorState);*)
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="actSavePos" Id="{05e85822-efae-4825-bb7b-24ba1bf1cfd3}">
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+	aSavedPos[i] := GVL.astAxes[i].stStatus.fActPosition;
+	//aSavedEnc[i] := GVL.astAxes[i].stStatus.nEncoderRawCounter;
+	//aSavedEnc[i] := GVL.astAxes[i].Axis.Dr´
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Method Name="checkAllDisabled" Id="{2341b51b-03ea-4e27-8f7c-a0ea7e409ce5}">
+      <Declaration><![CDATA[(*Method to check if all axes (real and virtual) are enabled.
+Only returns TRUE if BOTH blades are homed*)
+METHOD checkAllDisabled: BOOL
+VAR_OUTPUT
+    bOutput: BOOL := TRUE;
+END_VAR
+
+VAR
+	i2 : DINT := 1;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//IF (check MOD 100) = 0 THEN
+	//turn:=NOT(turn);
+	//check:=1;
+//END_IF
+//check:=check+1;
+
+// Needs fix, dealing with e.g. fPos 0.
+
+FOR i2 := 1 TO GVL_APP.nAXIS_NUM DO
+	IF NOT ar_bDisabled[i2] THEN
+		bOutput := FALSE;
+		EXIT;
+	//ELSIF NOT GVL.astAxes[i2].stStatus.bBwEnabled AND ar_bDisabled[i2] THEN
+	//	bOutput := FALSE;
+	END_IF
+END_FOR
+(*IF NOT GVL.astAxes[iBladePositive].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF
+IF NOT GVL.astAxes[iGapSize].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF
+IF NOT GVL.astAxes[iGapCentre].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF*)]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="checkAxesDone" Id="{3bf29ac0-a5a4-4b28-992a-7e7f336b2204}">
+      <Declaration><![CDATA[(*Method to check if all axes (real and virtual) are enabled.
+Only returns TRUE if BOTH blades are homed*)
+METHOD checkAxesDone: BOOL
+VAR_OUTPUT
+    bOutput: BOOL := TRUE;
+END_VAR
+
+VAR
+	i : DINT := 1;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//IF (check MOD 100) = 0 THEN
+	//turn:=NOT(turn);
+	//check:=1;
+//END_IF
+//check:=check+1;
+
+FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+	IF NOT ar_bDisabled[i] THEN
+		IF NOT GVL.astAxes[i].stStatus.bDone THEN  // Add something about position?
+    		bOutput := FALSE;
+			//i := GVL_APP.nAXIS_NUM + 1; //To break for loop.
+			EXIT;
+		END_IF
+	END_IF
+END_FOR
+(*IF NOT GVL.astAxes[iBladePositive].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF
+IF NOT GVL.astAxes[iGapSize].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF
+IF NOT GVL.astAxes[iGapCentre].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF*)]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="checkClosedLimitSwitches" Id="{db697710-c00a-432e-a17e-48d5a7399d04}">
+      <Declaration><![CDATA[(*Method to check if all axes (real and virtual) are enabled.
+Only returns TRUE if BOTH blades are homed*)
+METHOD checkClosedLimitSwitches: BOOL
+VAR_OUTPUT
+    bOutput: BOOL := TRUE;
+END_VAR
+
+VAR
+	i2 : DINT := 1;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//IF (check MOD 100) = 0 THEN
+	//turn:=NOT(turn);
+	//check:=1;
+//END_IF
+//check:=check+1;
+
+// Needs fix, dealing with e.g. fPos 0.
+
+FOR i2 := 1 TO GVL_APP.nAXIS_NUM DO
+	IF GVL.astAxes[i2].stInputs.bLimitBwd AND NOT ar_bDisabled[i2] THEN
+		bOutput := FALSE;
+		EXIT;
+	//ELSIF NOT GVL.astAxes[i2].stStatus.bBwEnabled AND ar_bDisabled[i2] THEN
+	//	bOutput := FALSE;
+	END_IF
+END_FOR
+(*IF NOT GVL.astAxes[iBladePositive].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF
+IF NOT GVL.astAxes[iGapSize].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF
+IF NOT GVL.astAxes[iGapCentre].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF*)]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="checkPos" Id="{783018b8-56b2-4894-b286-1694d0470845}">
+      <Declaration><![CDATA[(*Method to check if all axes (real and virtual) are enabled.
+Only returns TRUE if BOTH blades are homed*)
+METHOD checkPos: BOOL
+VAR_OUTPUT
+    bOutput: BOOL := TRUE;
+END_VAR
+
+VAR
+	i2 : DINT := 1;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//IF (check MOD 100) = 0 THEN
+	//turn:=NOT(turn);
+	//check:=1;
+//END_IF
+//check:=check+1;
+
+// Needs fix, dealing with e.g. fPos 0.
+
+FOR i2 := 1 TO GVL_APP.nAXIS_NUM DO
+	//IF GVL.astAxes[i2].stControl.fPosition = 0 THEN
+	//	IF GVL.astAxes[i2].stStatus.bBwEnabled THEN
+		//OR NOT GVL.astAxes[i2].stStatus.bBwEnabled THEN
+	//		bOutput := FALSE;
+	//		EXIT;
+	//	END_IF 
+	//ELSE
+	IF NOT ar_bDisabled[i2] THEN // Check if beamline is disabled/enabled
+		IF GVL.astAxes[i2].stStatus.fActPosition < GVL.astAxes[i2].stControl.fPosition*0.9 
+		OR GVL.astAxes[i2].stStatus.fActPosition > GVL.astAxes[i2].stControl.fPosition*1.10 THEN  // Add something about position?
+    		bOutput := FALSE;
+			//i := GVL_APP.nAXIS_NUM + 1; //To break for loop.
+			EXIT;
+		END_IF
+	END_IF
+END_FOR
+(*IF NOT GVL.astAxes[iBladePositive].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF
+IF NOT GVL.astAxes[iGapSize].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF
+IF NOT GVL.astAxes[iGapCentre].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF*)]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="checkVirtualHomed" Id="{10cb69f6-f474-4f89-bf23-cab8eaa1c08c}">
+      <Declaration><![CDATA[(*Method to check if the virtual axes for gap size and gap centre are homed/the calibration flag is present.
+Only returns TRUE if BOTH virtual axes are homed *)
+METHOD checkVirtualHomed: BOOL
+VAR_OUTPUT
+    bOutput: BOOL:= TRUE;
+END_VAR
+
+VAR
+	i : DINT := 1;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+	IF NOT GVL.astAxes[i].stStatus.bHomed THEN
+    	bOutput := FALSE;
+		EXIT;
+	END_IF
+END_FOR
+
+
+//IF NOT GVL.astAxes[1].stStatus.bHomed THEN
+//    bOutput := FALSE;
+//END_IF
+//IF NOT GVL.astAxes[1].stStatus.bHomed THEN
+//    bOutput := FALSE;
+////END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="LightShutterSystemStates">
+      <LineId Id="128" Count="0" />
+      <LineId Id="432" Count="0" />
+      <LineId Id="430" Count="0" />
+      <LineId Id="482" Count="0" />
+      <LineId Id="733" Count="1" />
+      <LineId Id="736" Count="3" />
+      <LineId Id="735" Count="0" />
+      <LineId Id="483" Count="0" />
+      <LineId Id="474" Count="0" />
+      <LineId Id="420" Count="0" />
+      <LineId Id="416" Count="0" />
+      <LineId Id="411" Count="0" />
+      <LineId Id="413" Count="0" />
+      <LineId Id="419" Count="0" />
+      <LineId Id="418" Count="0" />
+      <LineId Id="475" Count="0" />
+      <LineId Id="479" Count="2" />
+      <LineId Id="476" Count="0" />
+      <LineId Id="412" Count="0" />
+      <LineId Id="450" Count="0" />
+      <LineId Id="513" Count="0" />
+      <LineId Id="371" Count="0" />
+      <LineId Id="423" Count="0" />
+      <LineId Id="372" Count="1" />
+      <LineId Id="381" Count="1" />
+      <LineId Id="375" Count="0" />
+      <LineId Id="370" Count="0" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="237" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="241" Count="0" />
+      <LineId Id="384" Count="3" />
+      <LineId Id="429" Count="0" />
+      <LineId Id="355" Count="0" />
+      <LineId Id="496" Count="0" />
+      <LineId Id="495" Count="0" />
+      <LineId Id="246" Count="0" />
+      <LineId Id="244" Count="0" />
+      <LineId Id="239" Count="0" />
+      <LineId Id="500" Count="0" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="236" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="231" Count="0" />
+      <LineId Id="254" Count="0" />
+      <LineId Id="253" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="137" Count="1" />
+      <LineId Id="494" Count="0" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="110" Count="1" />
+      <LineId Id="561" Count="0" />
+      <LineId Id="112" Count="1" />
+      <LineId Id="320" Count="3" />
+      <LineId Id="56" Count="2" />
+      <LineId Id="255" Count="1" />
+      <LineId Id="258" Count="0" />
+      <LineId Id="490" Count="1" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="222" Count="0" />
+      <LineId Id="504" Count="0" />
+      <LineId Id="224" Count="0" />
+      <LineId Id="215" Count="2" />
+      <LineId Id="509" Count="0" />
+      <LineId Id="218" Count="0" />
+      <LineId Id="60" Count="2" />
+      <LineId Id="259" Count="1" />
+      <LineId Id="262" Count="1" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="618" Count="0" />
+      <LineId Id="484" Count="1" />
+      <LineId Id="487" Count="0" />
+      <LineId Id="142" Count="1" />
+      <LineId Id="225" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="565" Count="0" />
+      <LineId Id="619" Count="1" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="503" Count="0" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="65" Count="1" />
+      <LineId Id="264" Count="0" />
+      <LineId Id="266" Count="0" />
+      <LineId Id="265" Count="0" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="623" Count="0" />
+      <LineId Id="625" Count="4" />
+      <LineId Id="624" Count="0" />
+      <LineId Id="567" Count="0" />
+      <LineId Id="505" Count="0" />
+      <LineId Id="507" Count="0" />
+      <LineId Id="506" Count="0" />
+      <LineId Id="622" Count="0" />
+      <LineId Id="489" Count="0" />
+      <LineId Id="156" Count="2" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="187" Count="1" />
+      <LineId Id="186" Count="0" />
+      <LineId Id="391" Count="3" />
+      <LineId Id="200" Count="1" />
+      <LineId Id="564" Count="0" />
+      <LineId Id="202" Count="1" />
+      <LineId Id="69" Count="1" />
+      <LineId Id="267" Count="4" />
+      <LineId Id="273" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="189" Count="1" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="191" Count="3" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="72" Count="2" />
+      <LineId Id="274" Count="0" />
+      <LineId Id="276" Count="2" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="163" Count="2" />
+      <LineId Id="167" Count="4" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="82" Count="1" />
+      <LineId Id="280" Count="1" />
+      <LineId Id="279" Count="0" />
+      <LineId Id="822" Count="0" />
+      <LineId Id="914" Count="0" />
+      <LineId Id="913" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="908" Count="0" />
+      <LineId Id="824" Count="0" />
+      <LineId Id="829" Count="4" />
+      <LineId Id="935" Count="0" />
+      <LineId Id="826" Count="0" />
+      <LineId Id="939" Count="0" />
+      <LineId Id="931" Count="0" />
+      <LineId Id="933" Count="0" />
+      <LineId Id="834" Count="0" />
+      <LineId Id="837" Count="0" />
+      <LineId Id="836" Count="0" />
+      <LineId Id="397" Count="0" />
+      <LineId Id="838" Count="0" />
+      <LineId Id="843" Count="2" />
+      <LineId Id="852" Count="4" />
+      <LineId Id="847" Count="1" />
+      <LineId Id="867" Count="0" />
+      <LineId Id="869" Count="3" />
+      <LineId Id="849" Count="0" />
+      <LineId Id="861" Count="0" />
+      <LineId Id="860" Count="0" />
+      <LineId Id="862" Count="0" />
+      <LineId Id="864" Count="0" />
+      <LineId Id="873" Count="0" />
+      <LineId Id="865" Count="0" />
+      <LineId Id="863" Count="0" />
+      <LineId Id="874" Count="1" />
+      <LineId Id="882" Count="0" />
+      <LineId Id="876" Count="0" />
+      <LineId Id="851" Count="0" />
+      <LineId Id="878" Count="0" />
+      <LineId Id="842" Count="0" />
+      <LineId Id="881" Count="0" />
+      <LineId Id="884" Count="1" />
+      <LineId Id="880" Count="0" />
+      <LineId Id="886" Count="0" />
+      <LineId Id="888" Count="0" />
+      <LineId Id="890" Count="1" />
+      <LineId Id="912" Count="0" />
+      <LineId Id="889" Count="0" />
+      <LineId Id="887" Count="0" />
+      <LineId Id="892" Count="1" />
+      <LineId Id="895" Count="1" />
+      <LineId Id="894" Count="0" />
+      <LineId Id="946" Count="1" />
+      <LineId Id="949" Count="1" />
+      <LineId Id="879" Count="0" />
+      <LineId Id="901" Count="0" />
+      <LineId Id="899" Count="0" />
+      <LineId Id="922" Count="0" />
+      <LineId Id="900" Count="0" />
+      <LineId Id="916" Count="0" />
+      <LineId Id="841" Count="0" />
+      <LineId Id="839" Count="1" />
+      <LineId Id="424" Count="1" />
+      <LineId Id="792" Count="0" />
+      <LineId Id="427" Count="1" />
+      <LineId Id="744" Count="0" />
+      <LineId Id="781" Count="0" />
+      <LineId Id="786" Count="0" />
+      <LineId Id="782" Count="3" />
+      <LineId Id="771" Count="0" />
+      <LineId Id="787" Count="0" />
+      <LineId Id="750" Count="0" />
+      <LineId Id="769" Count="0" />
+      <LineId Id="768" Count="0" />
+      <LineId Id="753" Count="1" />
+      <LineId Id="794" Count="0" />
+      <LineId Id="897" Count="0" />
+      <LineId Id="796" Count="1" />
+      <LineId Id="799" Count="0" />
+      <LineId Id="798" Count="0" />
+      <LineId Id="801" Count="8" />
+      <LineId Id="818" Count="1" />
+      <LineId Id="811" Count="0" />
+      <LineId Id="813" Count="1" />
+      <LineId Id="812" Count="0" />
+      <LineId Id="815" Count="2" />
+      <LineId Id="810" Count="0" />
+      <LineId Id="800" Count="0" />
+      <LineId Id="795" Count="0" />
+      <LineId Id="755" Count="0" />
+      <LineId Id="759" Count="0" />
+      <LineId Id="793" Count="0" />
+      <LineId Id="760" Count="0" />
+      <LineId Id="757" Count="1" />
+      <LineId Id="398" Count="0" />
+      <LineId Id="905" Count="1" />
+      <LineId Id="941" Count="0" />
+      <LineId Id="924" Count="0" />
+      <LineId Id="923" Count="0" />
+      <LineId Id="791" Count="0" />
+      <LineId Id="198" Count="1" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="282" Count="3" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="209" Count="1" />
+      <LineId Id="497" Count="1" />
+      <LineId Id="233" Count="0" />
+      <LineId Id="220" Count="0" />
+      <LineId Id="211" Count="0" />
+      <LineId Id="681" Count="0" />
+      <LineId Id="212" Count="0" />
+      <LineId Id="508" Count="0" />
+      <LineId Id="213" Count="0" />
+      <LineId Id="205" Count="2" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="286" Count="1" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="288" Count="0" />
+      <LineId Id="325" Count="4" />
+      <LineId Id="319" Count="0" />
+      <LineId Id="214" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="291" Count="1" />
+      <LineId Id="289" Count="1" />
+      <LineId Id="331" Count="4" />
+      <LineId Id="341" Count="0" />
+      <LineId Id="337" Count="2" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="294" Count="0" />
+      <LineId Id="293" Count="0" />
+      <LineId Id="307" Count="0" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="312" Count="0" />
+      <LineId Id="352" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="348" Count="0" />
+      <LineId Id="343" Count="0" />
+      <LineId Id="349" Count="0" />
+      <LineId Id="344" Count="2" />
+      <LineId Id="353" Count="1" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="296" Count="0" />
+      <LineId Id="295" Count="0" />
+      <LineId Id="306" Count="0" />
+      <LineId Id="308" Count="0" />
+      <LineId Id="314" Count="0" />
+      <LineId Id="309" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="350" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="297" Count="1" />
+      <LineId Id="305" Count="0" />
+      <LineId Id="311" Count="0" />
+      <LineId Id="315" Count="1" />
+      <LineId Id="103" Count="1" />
+      <LineId Id="300" Count="1" />
+      <LineId Id="299" Count="0" />
+      <LineId Id="105" Count="1" />
+      <LineId Id="303" Count="1" />
+      <LineId Id="302" Count="0" />
+      <LineId Id="317" Count="1" />
+      <LineId Id="99" Count="1" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="368" Count="1" />
+      <LineId Id="367" Count="0" />
+      <LineId Id="417" Count="0" />
+      <LineId Id="473" Count="0" />
+      <LineId Id="472" Count="0" />
+      <LineId Id="466" Count="0" />
+      <LineId Id="463" Count="2" />
+      <LineId Id="467" Count="0" />
+      <LineId Id="462" Count="0" />
+      <LineId Id="468" Count="1" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.actCascadeClosing">
+      <LineId Id="15" Count="1" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="31" Count="2" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.actCascadeHoming">
+      <LineId Id="15" Count="1" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="36" Count="1" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.actCascadeOpening">
+      <LineId Id="15" Count="1" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="3" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="21" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.actCascadePower">
+      <LineId Id="2" Count="2" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.actFaults">
+      <LineId Id="1" Count="12" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="14" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.actRunMethods">
+      <LineId Id="2" Count="1" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="9" Count="2" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="5" Count="1" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.actSavePos">
+      <LineId Id="1" Count="0" />
+      <LineId Id="21" Count="2" />
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.checkAllDisabled">
+      <LineId Id="44" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="76" Count="1" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="71" Count="1" />
+      <LineId Id="87" Count="1" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="26" Count="7" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.checkAxesDone">
+      <LineId Id="44" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="26" Count="7" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.checkClosedLimitSwitches">
+      <LineId Id="44" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="76" Count="1" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="71" Count="1" />
+      <LineId Id="87" Count="1" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="26" Count="7" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.checkPos">
+      <LineId Id="44" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="76" Count="1" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="67" Count="1" />
+      <LineId Id="70" Count="2" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="26" Count="7" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.checkVirtualHomed">
+      <LineId Id="26" Count="2" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="9" Count="4" />
+      <LineId Id="22" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

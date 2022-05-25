@@ -83,7 +83,10 @@ Axis_Template();
 Pneumatics_Template();
 
 //Application program calls
-Application_Template();]]></ST>
+Application_Template();
+//SeqRangePos();
+//NeutronFactoryStates();
+LightShutterSystemStates();]]></ST>
       </Implementation>
     </Action>
     <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}" FolderPath="POSITION_RECOVERY\">
@@ -233,14 +236,9 @@ END_FOR]]></ST>
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.PROG">
-      <LineId Id="4" Count="1" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="6" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="3" Count="0" />
+      <LineId Id="14" Count="9" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="24" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.RESTORE_POSITIONS">
       <LineId Id="567" Count="105" />

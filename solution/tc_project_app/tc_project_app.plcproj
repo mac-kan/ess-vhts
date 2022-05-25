@@ -19,6 +19,21 @@
     <StorageProfile>Active</StorageProfile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\E_ResetZero.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\stFaultType.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\E_LightShutterSystemStates.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\E_SeqRangePosStates.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\E_NeutronFactoryStates.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GlobalTextList.TcGTLO">
       <SubType>Code</SubType>
     </Compile>
@@ -33,6 +48,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Application_Specific\Applications\Application_Template.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Application_Specific\Applications\NeutronFactoryStates.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Application_Specific\Applications\LightShutterSystemStates.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Application_Specific\Applications\SeqRangePos.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Application_Specific\Axes\Axis_Template.TcPOU">
@@ -214,10 +238,18 @@
     <Compile Include="Visualization Manager.TcVMO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="VISUs\AcceleratorStates.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="VISUs\languageTable.TcTLO">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
+    <Folder Include="VISUs" />
     <Folder Include="POUs\Application_Specific" />
     <Folder Include="POUs\Application_Specific\Applications" />
     <Folder Include="POUs\Application_Specific\Axes" />
@@ -244,6 +276,10 @@
     <Folder Include="POUs\Application_Specific" />
   </ItemGroup>
   <ItemGroup>
+    <PlaceholderReference Include="Get_Nc_Error_Texts_and_descriptions">
+      <DefaultResolution>Get_Nc_Error_Texts_and_descriptions, * (Beckhoff Automation GmbH &amp; Co. KG)</DefaultResolution>
+      <Namespace>GetNcError</Namespace>
+    </PlaceholderReference>
     <PlaceholderReference Include="System_VisuElemEventTable">
       <DefaultResolution>VisuElemEventTable, 1.0.3.0 (System)</DefaultResolution>
       <Namespace>VisuElemEventTable</Namespace>
@@ -338,6 +374,14 @@
     <PlaceholderResolution Include="Tc2_MC2">
       <Resolution>Tc2_MC2, 3.3.46.0 (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
+  </ItemGroup>
+  <ItemGroup>
+    <LibraryReference Include="Tc2_Math,3.3.1.0,Beckhoff Automation GmbH">
+      <Namespace>Tc2_Math</Namespace>
+    </LibraryReference>
+    <LibraryReference Include="VisuSymbols,3.5.10.0,System">
+      <Namespace>VisuSymbols</Namespace>
+    </LibraryReference>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="stFaultType" Id="{4a5536ba-e170-491c-a6c9-bcd335137193}">
+    <Declaration><![CDATA[TYPE stFaultType :
+	STRUCT
+		sFaultType	:	STRING(255);
+	END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

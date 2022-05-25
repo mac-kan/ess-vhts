@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="SeqRangePos" Id="{1823dd24-b089-4a57-bb58-c80a599e7f01}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM SeqRangePos
+VAR
+//Define all necessary variables for your application
+	bManual: BOOL := FALSE;
+	//bResult: BOOL := FALSE;
+	eMotorState: E_SeqRangePosStates := E_SeqRangePosStates.INIT;
+	
+	bAxesEnabled: BOOL := FALSE; // Should be a word instead?
+	bEnable: BOOL;
+	bMotorsHomed: BOOL;
+	bHoming: BOOL;
+	//bPos1: BOOL := FALSE;
+	//bPos2: BOOL := FALSE;
+	//bPos0: BOOL := TRUE;
+	bJogB: BOOL := FALSE;
+	bJogF: BOOL := FALSE;
+	bAdjust: BOOL := FALSE;
+	dPos: DWORD;
+	dPos_old: DWORD;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[actRunMethods();
+IF bManual THEN
+	dPos.1 := 1;
+//ELSIF NOT bManual THEN
+	//dPos.1 := 0;
+END_IF
+
+IF dPos <> 0 AND dPos <> dPos_old THEN
+	dPos := dPos_old XOR dPos;
+	dPos_old := dPos;
+ELSIF dPos = 0 THEN
+	dPos_old := dPos;
+END_IF
+
+
+CASE eMotorState OF
+	E_SeqRangePosStates.INIT:
+		IF bAxesEnabled AND bEnable THEN
+			eMotorState := E_SeqRangePosStates.CHECK_HOME_STATUS;
+		END_IF
+	
+	E_SeqRangePosStates.CHECK_HOME_STATUS:
+		IF bMotorsHomed THEN
+			eMotorState := E_SeqRangePosStates.CHECK_HOME_COMPLETE;
+			bHoming := FALSE;
+		END_IF
+		
+		GVL.astAxes[1].stConfig.eHomeSeq := E_HomingRoutines.eHomeToLimit_Bwd;
+		GVL.astAxes[1].stControl.eCommand := E_MotionFunctions.eHome;
+		GVL.astAxes[1].stControl.bExecute := TRUE;
+		eMotorState := E_SeqRangePosStates.CHECK_HOME_COMPLETE;
+		
+	E_SeqRangePosStates.CHECK_HOME_COMPLETE:
+		IF bMotorsHomed THEN
+			eMotorState := E_SeqRangePosStates.MOTOR_OPERATIONAL;
+		END_IF
+		
+	E_SeqRangePosStates.MOTOR_OPERATIONAL:
+		IF dPos.0 THEN
+			IF GVL.astAxes[1].stControl.fPosition <> 10 AND GVL.astAxes[1].stStatus.fActPosition <> 10 THEN
+				GVL.astAxes[1].stControl.fPosition:=10;
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eMoveAbsolute;
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.bExecute:=TRUE;
+			END_IF
+			
+			IF GVL.astAxes[1].stStatus.bDone THEN
+				eMotorState := E_SeqRangePosStates.POS_ZERO;
+			END_IF
+		
+		ELSIF dPos.1 THEN
+			IF GVL.astAxes[1].stControl.fPosition <> 100 AND NOT bAdjust THEN
+				GVL.astAxes[1].stControl.fPosition:=100;
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eMoveAbsolute;
+				GVL.astAxes[MAIN.hmiAxisSelection].stControl.bExecute:=TRUE;	
+			ELSIF bAdjust THEN
+				GVL.astAxes[1].stControl.eCommand :=E_MotionFunctions.eJog;
+				GVL.astAxes[1].stControl.bJogBwd := bJogB AND GVL.astAxes[1].stStatus.fActPosition >= 90;
+				GVL.astAxes[1].stControl.bJogFwd := bJogF AND GVL.astAxes[1].stStatus.fActPosition <= 110;
+			END_IF
+			
+			
+			//eMotorState := E_SeqRangePosStates.POS_ONE;
+			
+			//IF GVL.astAxes[1].stStatuS.bDone THEN
+			//	eMotorState := E_SeqRangePosStates.POS_ONE;
+			//END_IF
+		(*ELSIF bPOS2 THEN
+			//eMotorState := E_SeqRangePosStates.POS_ONE;
+			GVL.astAxes[1].stControl.fPosition:=175;
+			GVL.astAxes[1].stControl.eCommand:=E_MotionFunctions.eMoveAbsolute;
+			GVL.astAxes[1].stControl.bExecute:=TRUE;
+			IF GVL.astAxes[1].stStatus.bDone THEN
+				eMotorState := E_SeqRangePosStates.POS_ONE;
+			END_IF *)
+		END_IF
+		
+	E_SeqRangePosStates.POS_ZERO:
+		//Jogging not allowed
+		IF GVL.astAxes[1].stStatus.bDone THEN
+				eMotorState := E_SeqRangePosStates.MOTOR_OPERATIONAL;
+		END_IF
+	
+	//E_SeqRangePosStates.POSITIONING:
+		//Check if moving??
+		
+	E_SeqRangePosStates.POS_ONE:
+		GVL.astAxes[1].stControl.eCommand:=E_MotionFunctions.eJog;
+		GVL.astAxes[1].stControl.bJogBwd:= bJogB;
+		GVL.astAxes[1].stControl.bJogBwd:= bJogF;
+		
+
+	
+	//E_SeqRangePosStates.POS_TWO:
+		//
+END_CASE]]></ST>
+    </Implementation>
+    <Action Name="actRunMethods" Id="{65447170-7588-4c74-ae20-d56d7d3368b0}">
+      <Implementation>
+        <ST><![CDATA[checkAxesEnabled(bOutput => bAxesEnabled);
+//checkBladesHomed(bOutput => bBladesHomed);
+checkVirtualHomed(bOutput => bMotorsHomed);
+//checkBladesCoupled(bOutput => bBladesCoupled);
+//checkBladesUncoupled(bOutput => bBladesUncoupled);
+//checkAllAxisErrors(bOutput => bAxisErrorsPresent);
+//checkErrorState(bOutput => bFunctionInErrorState);*)]]></ST>
+      </Implementation>
+    </Action>
+    <Method Name="checkAxesEnabled" Id="{d6db1a2e-3f78-4a15-a6a1-38ec793c36b1}">
+      <Declaration><![CDATA[(*Method to check if all axes (real and virtual) are enabled.
+Only returns TRUE if BOTH blades are homed*)
+METHOD checkAxesEnabled: BOOL
+VAR_OUTPUT
+    bOutput: BOOL:= TRUE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT GVL.astAxes[1].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF
+(*IF NOT GVL.astAxes[iBladePositive].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF
+IF NOT GVL.astAxes[iGapSize].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF
+IF NOT GVL.astAxes[iGapCentre].stStatus.bEnabled THEN
+    bOutput := FALSE;
+END_IF*)]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="checkVirtualHomed" Id="{1438a467-baff-4c02-8df2-47c37d86a259}">
+      <Declaration><![CDATA[(*Method to check if the virtual axes for gap size and gap centre are homed/the calibration flag is present.
+Only returns TRUE if BOTH virtual axes are homed *)
+METHOD checkVirtualHomed: BOOL
+VAR_OUTPUT
+    bOutput: BOOL:= TRUE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT GVL.astAxes[1].stStatus.bHomed THEN
+    bOutput := FALSE;
+END_IF
+//IF NOT GVL.astAxes[1].stStatus.bHomed THEN
+//    bOutput := FALSE;
+////END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="SeqRangePos">
+      <LineId Id="43" Count="0" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="173" Count="1" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="171" Count="1" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="38" Count="2" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="47" Count="2" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="54" Count="1" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="57" Count="4" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="65" Count="1" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="106" Count="1" />
+      <LineId Id="153" Count="1" />
+      <LineId Id="122" Count="2" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="142" Count="1" />
+      <LineId Id="140" Count="1" />
+      <LineId Id="151" Count="1" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="145" Count="1" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="126" Count="1" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="110" Count="1" />
+      <LineId Id="129" Count="1" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="132" Count="1" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="99" Count="2" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="115" Count="1" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="102" Count="3" />
+      <LineId Id="35" Count="0" />
+    </LineIds>
+    <LineIds Name="SeqRangePos.actRunMethods">
+      <LineId Id="2" Count="4" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="SeqRangePos.checkAxesEnabled">
+      <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="26" Count="7" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="SeqRangePos.checkVirtualHomed">
+      <LineId Id="9" Count="4" />
+      <LineId Id="22" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
