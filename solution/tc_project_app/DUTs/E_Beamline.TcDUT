@@ -1,18 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <DUT Name="E_ResetZero" Id="{bda51dd9-b3e4-44c1-a309-5d7511816cd0}">
+  <DUT Name="E_Beamline" Id="{718887e3-2264-42d5-abca-31c446f9f7d9}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 {attribute 'strict'}
-TYPE E_ResetZero :
+TYPE E_Beamline :
 (
-    INIT := 0,
-	HOME_AXIS,
-	FIND_POS,
-	PREPARE_POS_X,
-	RECORD_POS_X,
-	PREPARE_POS_Y,
-	RECORD_POS_Y,
-	POSITIONING
+    Miracles := 1,
+	Heimdal
 );
 END_TYPE
 ]]></Declaration>

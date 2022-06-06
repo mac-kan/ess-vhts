@@ -19,6 +19,9 @@
     <StorageProfile>Active</StorageProfile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\E_Beamline.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\E_ResetZero.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -32,6 +35,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\E_NeutronFactoryStates.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\ST_LightShutter.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GlobalTextList.TcGTLO">

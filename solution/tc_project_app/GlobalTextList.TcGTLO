@@ -76,6 +76,17 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"5"</v>
+              <v n="TextDefault">"Add closed switches 
+from us and PSS"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1153"</v>
+              <v n="TextDefault">"Add closed switches from us and PSS"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"29"</v>
               <v n="TextDefault">"Adjusting"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -283,6 +294,11 @@
             <o>
               <v n="TextID">"907"</v>
               <v n="TextDefault">"Closed Off"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1624"</v>
+              <v n="TextDefault">"Closed Shutter"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -553,6 +569,19 @@
             <o>
               <v n="TextID">"1126"</v>
               <v n="TextDefault">"HEIMDAL"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1306"</v>
+              <v n="TextDefault">"Hide this and think
+about how it is to"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"837"</v>
+              <v n="TextDefault">"Hide this and think
+about how it is to
+be accessed"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -878,6 +907,28 @@
             <o>
               <v n="TextID">"1197"</v>
               <v n="TextDefault">"Position OPEN - LO"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1516"</v>
+              <v n="TextDefault">"PSS Permission"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1182"</v>
+              <v n="TextDefault">"PSS Permission
+
+Servo Drive Powered"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1174"</v>
+              <v n="TextDefault">"PSS Permit"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"184"</v>
+              <v n="TextDefault">"PSS Power"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
