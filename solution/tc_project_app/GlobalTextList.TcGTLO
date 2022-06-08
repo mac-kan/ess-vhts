@@ -82,6 +82,14 @@ from us and PSS"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"365"</v>
+              <v n="TextDefault">"Add closed switches 
+from us and PSS
+
+Add incremental choice"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"1153"</v>
               <v n="TextDefault">"Add closed switches from us and PSS"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -99,6 +107,11 @@ from us and PSS"</v>
             <o>
               <v n="TextID">"256"</v>
               <v n="TextDefault">"Axis"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1718"</v>
+              <v n="TextDefault">"Axis Error"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -474,6 +487,11 @@ from us and PSS"</v>
             <o>
               <v n="TextID">"463"</v>
               <v n="TextDefault">"E_PneumaticMode Selection"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"962"</v>
+              <v n="TextDefault">"f"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
