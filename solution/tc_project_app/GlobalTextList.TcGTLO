@@ -305,6 +305,22 @@ Add incremental choice"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"119"</v>
+              <v n="TextDefault">"Closed
+LSS / PSS"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"62"</v>
+              <v n="TextDefault">"Closed LSS - PSS - PSS"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"159"</v>
+              <v n="TextDefault">"Closed LSS / PSS"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"907"</v>
               <v n="TextDefault">"Closed Off"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -312,6 +328,21 @@ Add incremental choice"</v>
             <o>
               <v n="TextID">"1624"</v>
               <v n="TextDefault">"Closed Shutter"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1955"</v>
+              <v n="TextDefault">"Closed Shutter - LSS - PSS - PSS"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1735"</v>
+              <v n="TextDefault">"Closed Shutter LSS / PSS"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1806"</v>
+              <v n="TextDefault">"Closed Shutters"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -758,6 +789,16 @@ be accessed"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1529"</v>
+              <v n="TextDefault">"LOKI"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"2035"</v>
+              <v n="TextDefault">"LSS"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"651"</v>
               <v n="TextDefault">"LSS Open"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -928,6 +969,11 @@ be accessed"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1423"</v>
+              <v n="TextDefault">"PSS"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"1516"</v>
               <v n="TextDefault">"PSS Permission"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -937,6 +983,21 @@ be accessed"</v>
               <v n="TextDefault">"PSS Permission
 
 Servo Drive Powered"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"92"</v>
+              <v n="TextDefault">"PSS Permission
+
+Servo Drives
+Powered"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"850"</v>
+              <v n="TextDefault">"PSS Permission
+
+Servo Drives Powered"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -1042,6 +1103,48 @@ Servo Drive Powered"</v>
             <o>
               <v n="TextID">"108"</v>
               <v n="TextDefault">"Test Language"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"730"</v>
+              <v n="TextDefault">"To do:"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1036"</v>
+              <v n="TextDefault">"To do:
+* Transitions when aborting"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"2163"</v>
+              <v n="TextDefault">"To do:
+*Transitions when aborting
+*RTrig for first entry in state"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"2038"</v>
+              <v n="TextDefault">"To do:
+*Transitions when aborting
+*RTrig for first entry in state
+*Fault state"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1997"</v>
+              <v n="TextDefault">"To do:
+*Transitions when aborting
+*RTrig for first entry in state
+*Fault state
+*Substate as fb:s?"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"66"</v>
+              <v n="TextDefault">"To do:
+*Transitions when aborting
+*RTrig for first entry in state?"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
