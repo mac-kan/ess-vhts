@@ -11,6 +11,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"972"</v>
+              <v n="TextDefault">"  bLocalMode"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"587"</v>
               <v n="TextDefault">"%1d"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -401,6 +406,11 @@ LSS / PSS"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"350"</v>
+              <v n="TextDefault">"eHomeDirect"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"180"</v>
               <v n="TextDefault">"eHomeEncPulseBwd"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -636,6 +646,11 @@ be accessed"</v>
             <o>
               <v n="TextID">"123"</v>
               <v n="TextDefault">"HOME"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"568"</v>
+              <v n="TextDefault">"Home"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
