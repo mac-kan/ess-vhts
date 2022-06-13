@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_OpenToOpen" Id="{23dcdda6-c558-4930-ae71-94d27a0a577e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_OpenToOpen
+VAR_INPUT
+	bAxisDelayPower : BOOL;
+	bAxisDelayDone : BOOL;
+	//aLightShutters[1..GVL_APP.nAXIS_NUM] OF ST_LightShutter
+
+END_VAR
+VAR_OUTPUT
+	//bOpenToOpen : BOOL;
+	//eLightShutterSystemState : E_LightShutterSystemStates;
+END_VAR
+VAR_IN_OUT
+	//eLightShutterSystemState : E_LightShutterSystemStates;
+END_VAR
+
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bAxisDelayPower THEN // Use RTRIG here instead?
+	GVL.astAxes[MAIN.hmiAxisSelection].stControl.fPosition := 
+		GVL_APP.aLightShutters[MAIN.hmiAxisSelection].pos[GVL_APP.aLightShutters[MAIN.hmiAxisSelection].curPosNbr];
+	GVL.astAxes[MAIN.hmiAxisSelection].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
+	GVL.astAxes[MAIN.hmiAxisSelection].stControl.bExecute := TRUE;
+END_IF
+		
+		// Generell bOpenToOpenCheck?
+		
+		// Change second condition?
+IF bAxisDelayDone AND 
+	ABS(GVL.astAxes[MAIN.hmiAxisSelection].stStatus.fActPosition - 
+		GVL_APP.aLightShutters[MAIN.hmiAxisSelection].pos[GVL_APP.aLightShutters[MAIN.hmiAxisSelection].curPosNbr]) < 1 THEN
+	//bOpenToOpen := FALSE;
+	GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := FALSE;
+	//eLightShutterSystemState := E_LightShutterSystemStates.Open;
+	//eLightShutterSystemState := E_LightShutterSystemStates.Open;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_OpenToOpen">
+      <LineId Id="28" Count="15" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

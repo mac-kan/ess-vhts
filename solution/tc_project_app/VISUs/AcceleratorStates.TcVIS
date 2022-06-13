@@ -1514,7 +1514,7 @@
                       <a cet="STSnippetInputAction">
                         <o>
                           <v n="STSnippet">"//MAIN.hmiAxisSelection := 1;
-LightShutterSystemStates.aLightShutters[1].curPosNbr:=1;"</v>
+GVL_APP.aLightShutters[1].curPosNbr:=1;"</v>
                         </o>
                       </a>
                     </d>
@@ -2545,7 +2545,7 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                           <l n="VisualElemMemberList" t="VisualElemMemberCollection" cet="VisualElemMember">
                             <o>
                               <v n="Id">1186196937L</v>
-                              <v n="Value">"LightShutterSystemStates.bResetZero"</v>
+                              <v n="Value">"LightShutterSystemStates.aResetZero[1]"</v>
                             </o>
                           </l>
                         </o>
@@ -4030,7 +4030,7 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                       <a cet="STSnippetInputAction">
                         <o>
                           <v n="STSnippet">"//MAIN.hmiAxisSelection := 2;
-LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
+GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                         </o>
                       </a>
                     </d>
@@ -4520,7 +4520,7 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                           <l n="VisualElemMemberList" t="VisualElemMemberCollection" cet="VisualElemMember">
                             <o>
                               <v n="Id">1186196937L</v>
-                              <v n="Value">"LightShutterSystemStates.bResetZero"</v>
+                              <v n="Value">"LightShutterSystemStates.aResetZero[2]"</v>
                             </o>
                           </l>
                         </o>
@@ -9228,13 +9228,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                               <v>TL_ElementProperties.Desc_Text</v>
                                               <v>DisplayTextId</v>
                                               <v>TL_ElementProperties.Text</v>
-                                              <v>Visu_TypeString</v>
+                                              <v>AllocateText</v>
                                               <v></v>
                                               <v>''DOCU__COMMENT</v>
                                               <v> The text, the user entered resp. can modify.</v>
                                               <v>DirectlyAssignable</v>
                                               <v></v>
-                                              <v>AllocateText</v>
+                                              <v>Visu_TypeString</v>
                                               <v></v>
                                             </d>
                                             <v n="ConvDone">false</v>
@@ -9343,13 +9343,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                               <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                               <v>DisplayTextId</v>
                                               <v>TL_ElementProperties.Tooltip</v>
-                                              <v>Visu_TypeString</v>
+                                              <v>AllocateText</v>
                                               <v></v>
                                               <v>''DOCU__COMMENT</v>
                                               <v> The tooltip, the user entered resp. can modify.</v>
                                               <v>DirectlyAssignable</v>
                                               <v></v>
-                                              <v>AllocateText</v>
+                                              <v>Visu_TypeString</v>
                                               <v></v>
                                             </d>
                                             <v n="ConvDone">false</v>
@@ -9749,13 +9749,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_Text</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Text</v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The text, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -9864,13 +9864,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Tooltip</v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The tooltip, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -10269,13 +10269,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_Text</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Text</v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The text, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -10384,13 +10384,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Tooltip</v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The tooltip, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -10789,13 +10789,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_Text</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Text</v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The text, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -10904,13 +10904,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Tooltip</v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The tooltip, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -11309,13 +11309,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_Text</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Text</v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The text, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -11424,13 +11424,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Tooltip</v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The tooltip, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -11829,13 +11829,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_Text</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Text</v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The text, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -11944,13 +11944,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Tooltip</v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The tooltip, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -12349,13 +12349,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_Text</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Text</v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The text, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -12464,13 +12464,13 @@ LightShutterSystemStates.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Tooltip</v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The tooltip, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -25178,7 +25178,7 @@ GVL.astAxes[Main.hmiAxisSelection].stControl.bExecute:=TRUE;"</v>
                   <a cet="STSnippetInputAction">
                     <o>
                       <v n="STSnippet">"//MAIN.hmiAxisSelection := 2;
-LightShutterSystemStates.aLightShutters[2].curPosNbr:=2;"</v>
+GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                     </o>
                   </a>
                 </d>
@@ -26086,7 +26086,7 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"LightShutterSystemStates.ar_bDisabled[1] := NOT(LightShutterSystemStates.ar_bDisabled[1]);"</v>
+                          <v n="STSnippet">"LightShutterSystemStates.aDisabled[1] := NOT(LightShutterSystemStates.aDisabled[1]);"</v>
                         </o>
                       </a>
                     </d>
@@ -26173,7 +26173,7 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                         </o>
                         <o>
                           <v n="Id">743958181L</v>
-                          <v n="Value">"LightShutterSystemStates.ar_bDisabled[1]"</v>
+                          <v n="Value">"LightShutterSystemStates.aDisabled[1]"</v>
                         </o>
                       </l>
                     </o>
@@ -26267,7 +26267,7 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                         </o>
                         <o>
                           <v n="Id">743958181L</v>
-                          <v n="Value">"LightShutterSystemStates.ar_bDisabled[2]"</v>
+                          <v n="Value">"LightShutterSystemStates.aDisabled[2]"</v>
                         </o>
                       </l>
                     </o>
@@ -26622,16 +26622,10 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
                 <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
-                  <v>OnMouseClick</v>
-                  <a cet="STSnippetInputAction">
-                    <o>
-                      <v n="STSnippet">"LightShutterSystemStates.ar_bDisabled[2] := NOT(LightShutterSystemStates.ar_bDisabled[2]);"</v>
-                    </o>
-                  </a>
                   <v>OnMouseDown</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"LightShutterSystemStates.ar_bDisabled[2] := NOT(LightShutterSystemStates.ar_bDisabled[2]);"</v>
+                      <v n="STSnippet">"LightShutterSystemStates.aDisabled[2] := NOT(LightShutterSystemStates.aDisabled[2]);"</v>
                     </o>
                   </a>
                 </d>
@@ -27203,13 +27197,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                           <v>TL_ElementProperties.Desc_Text</v>
                                           <v>DisplayTextId</v>
                                           <v>TL_ElementProperties.Text</v>
-                                          <v>Visu_TypeString</v>
+                                          <v>AllocateText</v>
                                           <v></v>
                                           <v>''DOCU__COMMENT</v>
                                           <v> The text, the user entered resp. can modify.</v>
                                           <v>DirectlyAssignable</v>
                                           <v></v>
-                                          <v>AllocateText</v>
+                                          <v>Visu_TypeString</v>
                                           <v></v>
                                         </d>
                                         <v n="ConvDone">false</v>
@@ -27318,13 +27312,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                           <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                           <v>DisplayTextId</v>
                                           <v>TL_ElementProperties.Tooltip</v>
-                                          <v>Visu_TypeString</v>
+                                          <v>AllocateText</v>
                                           <v></v>
                                           <v>''DOCU__COMMENT</v>
                                           <v> The tooltip, the user entered resp. can modify.</v>
                                           <v>DirectlyAssignable</v>
                                           <v></v>
-                                          <v>AllocateText</v>
+                                          <v>Visu_TypeString</v>
                                           <v></v>
                                         </d>
                                         <v n="ConvDone">false</v>
@@ -27724,13 +27718,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -27839,13 +27833,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -28244,13 +28238,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -28359,13 +28353,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -28764,13 +28758,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -28879,13 +28873,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -29284,13 +29278,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -29399,13 +29393,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -29804,13 +29798,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -29919,13 +29913,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -30324,13 +30318,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -30439,13 +30433,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -30844,13 +30838,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -30959,13 +30953,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -31364,13 +31358,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -31479,13 +31473,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -31884,13 +31878,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -31999,13 +31993,13 @@ LightShutterSystemStates.bJogB := FALSE;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -33643,10 +33637,10 @@ be accessed"</v>
               <d n="FbMethods" t="CaseInsensitiveHashtable_1" ckt="String" cvt="Guid">
                 <v>FB_Init</v>
                 <v>bab6df26-4c30-4280-b417-17fa450ae312</v>
-                <v>FB_Reinit</v>
-                <v>2b8d3b1b-a6ae-47e2-a88a-cb77a5e0c58d</v>
                 <v>FB_Exit</v>
                 <v>76419a3d-2291-4623-ba2e-174b1c6162dd</v>
+                <v>FB_Reinit</v>
+                <v>2b8d3b1b-a6ae-47e2-a88a-cb77a5e0c58d</v>
               </d>
               <v n="FbName">"NotImportant"</v>
               <v n="FbGuid">{b1d139bf-b259-4b8a-8c45-0f829e6ed1d0}</v>

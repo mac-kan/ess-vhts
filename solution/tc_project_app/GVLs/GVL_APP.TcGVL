@@ -3,7 +3,7 @@
   <GVL Name="GVL_APP" Id="{8fe9690c-7907-432e-bedb-6fc99b5ce255}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
-
+	aPosSwitch : ARRAY[1..GVL_APP.nAXIS_NUM, 1..2] OF BOOL;
 END_VAR
 
 VAR_GLOBAL CONSTANT
@@ -11,6 +11,9 @@ VAR_GLOBAL CONSTANT
                          (OPC_PROP[0005]: 1 : OPC_PROP_RIGHTS, here read only) *)
     nPNEUMATIC_AXIS_NUM: UINT := 0;
 END_VAR
-]]></Declaration>
+
+VAR_GLOBAL PERSISTENT
+	aLightShutters : ARRAY[1..GVL_APP.nAXIS_NUM] OF ST_LightShutter;
+END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

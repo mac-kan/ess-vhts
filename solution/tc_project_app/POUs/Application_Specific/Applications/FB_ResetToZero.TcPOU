@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_ResetToZero" Id="{67dc4f4f-1e2d-406f-8248-ffd9bddc7993}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ResetToZero
+
+VAR_INPUT
+	axisNbr : UINT;
+END_VAR
+
+VAR_OUTPUT
+END_VAR
+
+VAR
+	usCurrentPos : USINT;
+	eResetZeroInternal: E_ResetZero := E_ResetZero.INIT;
+	fPosX : LREAL;
+	fPosY : LREAL;
+	fPosFocal : LREAL;
+END_VAR
+
+VAR_IN_OUT
+	bResetZero : BOOL;
+	bAxisDelayDone : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE eResetZeroInternal OF
+			
+			E_ResetZero.INIT:
+				
+				GVL.astAxes[axisNbr].stControl.bEnable := TRUE;
+				usCurrentPos := 1; // Help variable for looping through first and if available, second, position
+				
+				IF GVL.astAxes[axisNbr].stStatus.bEnabled THEN
+					eResetZeroInternal := E_ResetZero.HOME_AXIS;
+				END_IF
+				
+			E_ResetZero.HOME_AXIS:
+				// CHANGE to HomeByTorque and at top position.
+				GVL.astAxes[axisNbr].stConfig.eHomeSeq := E_HomingRoutines.eHomeToLimit_Bwd;
+				GVL.astAxes[axisNbr].stControl.eCommand := E_MotionFunctions.eHome;
+				GVL.astAxes[axisNbr].stControl.bExecute := TRUE;				
+				
+				IF GVL.astAxes[axisNbr].stStatus.bDone AND NOT(GVL.astAxes[axisNbr].stInputs.bLimitBwd) THEN
+					eResetZeroInternal := E_ResetZero.FIND_POS;
+				END_IF
+			
+			E_ResetZero.FIND_POS:
+				GVL.astAxes[axisNbr].stControl.eCommand:=E_MotionFunctions.eJog;
+				// Can prob. not use bHomeSensor later. But other I/O LS - change direction also since zero at top?
+				GVL.astAxes[axisNbr].stControl.bJogFwd:= NOT(GVL_APP.aPosSwitch[axisNbr, usCurrentPos]);
+				
+				IF GVL.astAxes[axisNbr].stStatus.bDone AND GVL_APP.aPosSwitch[axisNbr, usCurrentPos] THEN
+					eResetZeroInternal := E_ResetZero.PREPARE_POS_X;
+				END_IF
+				
+			E_ResetZero.PREPARE_POS_X:
+				GVL.astAxes[axisNbr].stControl.bJogBwd:= GVL_APP.aPosSwitch[axisNbr, usCurrentPos];
+				
+				IF GVL.astAxes[axisNbr].stStatus.bDone AND NOT(GVL_APP.aPosSwitch[axisNbr, usCurrentPos]) THEN
+					eResetZeroInternal := E_ResetZero.RECORD_POS_X;
+				END_IF
+				
+			E_ResetZero.RECORD_POS_X:
+				GVL.astAxes[axisNbr].stControl.fVelocity := 1;
+				GVL.astAxes[axisNbr].stControl.bJogFwd := NOT(GVL_APP.aPosSwitch[axisNbr, usCurrentPos]);
+				
+				IF GVL.astAxes[axisNbr].stStatus.bDone AND GVL_APP.aPosSwitch[axisNbr, usCurrentPos] THEN
+					fPosX := GVL.astAxes[axisNbr].stStatus.fActPosition;
+					eResetZeroInternal := E_ResetZero.PREPARE_POS_Y;
+				END_IF
+				
+			E_ResetZero.PREPARE_POS_Y:
+				
+				GVL.astAxes[axisNbr].stControl.fVelocity := GVL.astAxes[axisNbr].stConfig.fVelocityDefaultSlow;
+				GVL.astAxes[axisNbr].stControl.bJogFwd := GVL_APP.aPosSwitch[axisNbr, usCurrentPos];
+				
+				IF GVL.astAxes[axisNbr].stStatus.bDone AND NOT(GVL_APP.aPosSwitch[axisNbr, usCurrentPos]) THEN
+					eResetZeroInternal := E_ResetZero.RECORD_POS_Y;
+				END_IF
+				
+			E_ResetZero.RECORD_POS_Y:
+				GVL.astAxes[axisNbr].stControl.bJogBwd := NOT(GVL_APP.aPosSwitch[axisNbr, usCurrentPos]);
+				
+				IF GVL.astAxes[axisNbr].stStatus.bDone AND GVL_APP.aPosSwitch[axisNbr, usCurrentPos] THEN
+				
+					fPosY := GVL.astAxes[axisNbr].stStatus.fActPosition;
+					fPosFocal := (fPosX+fPosY)/2;
+					GVL_APP.aLightShutters[axisNbr].pos[usCurrentPos] := fPosFocal;
+					
+					// Check if axis has two position, then if not at pos two, go find it, otherwise quit.
+					IF GVL_APP.aLightShutters[axisNbr].nbrOfPos = usCurrentPos THEN
+						eResetZeroInternal := E_ResetZero.POSITIONING;
+					ELSE
+						usCurrentPos := usCurrentPos + 1;
+						eResetZeroInternal := E_ResetZero.FIND_POS;
+					END_IF
+						
+				END_IF
+			
+			E_ResetZero.POSITIONING:
+				GVL.astAxes[axisNbr].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
+				GVL.astAxes[axisNbr].stControl.fPosition := GVL_APP.aLightShutters[axisNbr].pos[GVL_APP.aLightShutters[axisNbr].curPosNbr];
+				GVL.astAxes[axisNbr].stControl.bExecute := TRUE;
+				
+				IF bAxisDelayDone THEN
+					bResetZero := FALSE;
+				END_IF
+		END_CASE
+						
+		IF NOT bResetZero THEN // Transitioning from state - need to check axis status? 
+			GVL.astAxes[axisNbr].stControl.bEnable := FALSE;
+			eResetZeroInternal := E_ResetZero.INIT;
+			//eLightShutterSystemState := E_LightShutterSystemStates.Open; // What should happen here?
+		END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_ResetToZero">
+      <LineId Id="10" Count="87" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
