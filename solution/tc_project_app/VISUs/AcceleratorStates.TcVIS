@@ -1888,15 +1888,13 @@ GVL_APP.aLightShutters[1].curPosNbr:=1;"</v>
                       <v>OnMouseUp</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"MAIN.hmiAxisSelection:=1;
-LightShutterSystemStates.bJogF := FALSE;"</v>
+                          <v n="STSnippet">"LightShutterSystemStates.aJogF[1] := FALSE;"</v>
                         </o>
                       </a>
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"MAIN.hmiAxisSelection := 1;
-LightShutterSystemStates.bJogF := TRUE;"</v>
+                          <v n="STSnippet">"LightShutterSystemStates.aJogF[1] := TRUE;"</v>
                         </o>
                       </a>
                     </d>
@@ -2070,15 +2068,13 @@ LightShutterSystemStates.bJogF := TRUE;"</v>
                       <v>OnMouseDown</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"MAIN.hmiAxisSelection := 1;
-LightShutterSystemStates.bJogB := TRUE;"</v>
+                          <v n="STSnippet">"LightShutterSystemStates.aJogB[1] := TRUE;"</v>
                         </o>
                       </a>
                       <v>OnMouseUp</v>
                       <a cet="STSnippetInputAction">
                         <o>
-                          <v n="STSnippet">"MAIN.hmiAxisSelection := 1;
-LightShutterSystemStates.bJogB := FALSE;"</v>
+                          <v n="STSnippet">"LightShutterSystemStates.aJogB[1] := FALSE;"</v>
                         </o>
                       </a>
                     </d>
@@ -17521,10 +17517,11 @@ GVL.astAxes[Main.hmiAxisSelection].stControl.bExecute:=TRUE;"</v>
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
                 <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
-                  <v>OnMouseUp</v>
+                  <v>OnMouseDown</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.bJogBwd:= FALSE;"</v>
+                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eJog;
+GVL.astAxes[Main.hmiAxisSelection].stControl.bJogBwd:= TRUE;"</v>
                     </o>
                   </a>
                   <v>OnMouseClick</v>
@@ -17534,11 +17531,10 @@ GVL.astAxes[Main.hmiAxisSelection].stControl.bExecute:=TRUE;"</v>
 "</v>
                     </o>
                   </a>
-                  <v>OnMouseDown</v>
+                  <v>OnMouseUp</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eJog;
-GVL.astAxes[Main.hmiAxisSelection].stControl.bJogBwd:= TRUE;"</v>
+                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.bJogBwd:= FALSE;"</v>
                     </o>
                   </a>
                 </d>
@@ -17718,10 +17714,11 @@ GVL.astAxes[Main.hmiAxisSelection].stControl.bJogBwd:= TRUE;"</v>
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
                 <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
-                  <v>OnMouseUp</v>
+                  <v>OnMouseDown</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.bJogFwd:= FALSE;"</v>
+                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eJog;
+GVL.astAxes[Main.hmiAxisSelection].stControl.bJogFwd:= TRUE;"</v>
                     </o>
                   </a>
                   <v>OnMouseClick</v>
@@ -17731,11 +17728,10 @@ GVL.astAxes[Main.hmiAxisSelection].stControl.bJogBwd:= TRUE;"</v>
 "</v>
                     </o>
                   </a>
-                  <v>OnMouseDown</v>
+                  <v>OnMouseUp</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eJog;
-GVL.astAxes[Main.hmiAxisSelection].stControl.bJogFwd:= TRUE;"</v>
+                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.bJogFwd:= FALSE;"</v>
                     </o>
                   </a>
                 </d>
@@ -25719,15 +25715,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                   <v>OnMouseDown</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"MAIN.hmiAxisSelection := 2;
-LightShutterSystemStates.bJogF := TRUE;"</v>
+                      <v n="STSnippet">"LightShutterSystemStates.aJogF[2] := TRUE;"</v>
                     </o>
                   </a>
                   <v>OnMouseUp</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"MAIN.hmiAxisSelection := 2;
-LightShutterSystemStates.bJogF := FALSE;"</v>
+                      <v n="STSnippet">"LightShutterSystemStates.aJogF[2] := FALSE;"</v>
                     </o>
                   </a>
                 </d>
@@ -25901,15 +25895,13 @@ LightShutterSystemStates.bJogF := FALSE;"</v>
                   <v>OnMouseDown</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"MAIN.hmiAxisSelection := 2;
-LightShutterSystemStates.bJogB := TRUE;"</v>
+                      <v n="STSnippet">"LightShutterSystemStates.aJogB[2] := TRUE;"</v>
                     </o>
                   </a>
                   <v>OnMouseUp</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"MAIN.hmiAxisSelection := 2;
-LightShutterSystemStates.bJogB := FALSE;"</v>
+                      <v n="STSnippet">"LightShutterSystemStates.aJogB[2] := FALSE;"</v>
                     </o>
                   </a>
                 </d>

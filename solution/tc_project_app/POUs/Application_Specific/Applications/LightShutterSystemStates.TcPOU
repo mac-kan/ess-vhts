@@ -55,6 +55,7 @@ VAR
 	fbOpenToOpen : FB_OpenToOpen;
 	aOpenToOpen : ARRAY[1..GVL_APP.nAXIS_NUM] OF BOOL; // 
 	bAxesEnabled : BOOL; // If any axes is enabled
+	aTON_delayOpenToOpen : ARRAY[1..GVL_APP.nAXIS_NUM] OF TON;
 	TON_delayOpenToOpen : TON;
 	bDelayOpenToOpen : BOOL;
 	
@@ -63,6 +64,14 @@ VAR
 	aFbResetZero : ARRAY[1..GVL_APP.nAXIS_NUM] OF FB_ResetToZero;
 	TON_delayResetZero : TON;
 	bDelayResetZero : BOOL;
+	
+	aJogF : ARRAY[1..GVL_APP.nAXIS_NUM] OF BOOL;
+	aJogB : ARRAY[1..GVL_APP.nAXIS_NUM] OF BOOL;
+	aTOF_delayDisable : ARRAY[1..GVL_APP.nAXIS_NUM] OF TOF;
+	TOF_delayJog : TOF;
+	bJog : BOOL;
+	
+	aTON_delayDone : ARRAY[1..GVL_APP.nAXIS_NUM] OF TON;
 	
 END_VAR
 
@@ -81,8 +90,14 @@ TON_delayPower(IN:=bAxesEnabled, PT:=T#0.5S, Q=>bAxisDelayPower);
 TON_delayOpenToOpen(IN:=bOpenToOpen, PT:=T#0.5S, Q=>bDelayOpenToOpen);
 TON_delayResetZero(IN:=bResetZero, PT:=T#0.5S, Q=>bDelayResetZero);
 
+TOF_delayJog(IN:=bJog, PT:=T#10S); // How to make this better? Also fix problem with OpenToOpen turning off button.
+//TOF_delayJogF(IN:=aJogF[i], PT:=T#0.1S);
+
 bOpenHiFake := GVL.astAxes[2].stStatus.fActPosition > 85 AND GVL.astAxes[2].stStatus.fActPosition < 100; // Simulates position switch of second focal point
 actPositionSwitches();
+actDelayDisable();
+actDelayOpenToOpen();
+actDelayDone();
 
 //// To be mapped to EPICS signal. During tests mapped to DI. /////
 IF NOT (eNeutronFactoryState = E_NeutronFactoryStates.Disabled) THEN
@@ -197,25 +212,39 @@ CASE eLightShutterSystemState OF
 		// turns power on temporarily for that axis? Or should the enable button turn a bool in 
 		// an array TRUE / FALSE also here?
 		
-		IF bAxesDone THEN
-			bEnablePower := FALSE;
-			actCascadePower();
-		END_IF
+		//IF bAxesDone THEN
+		//	bEnablePower := FALSE;
+		//	actCascadePower();
+		//END_IF
 		
+		actPower();
+		actOpenToOpen();
+		
+		FOR i:=1 TO GVL_APP.nAXIS_NUM DO
+			IF aResetZero[i] THEN
+				// aFbResetZero[i](bResetZero := aResetZero[i], bAxisDelayDone := bAxisDelayDone, axisNbr := i);
+				aFbResetZero[i](bResetZero := aResetZero[i], TON_delayDone := aTON_delayDone[i], axisNbr := i);
+			END_IF
+		END_FOR
+		
+		actJog();
+		
+
 		
 		// Possibly create FB_LightShutter and add in array or structure
 		// call it from here like:
 		// for ... 
 		// 		aLightShutter[i].fb_LightShutter(aOpenToOpen, aJogF/aJogB, aResetToZero)??
 		
-		
+		(*
 		IF bJogB OR bJogF AND bLSS_Open THEN
 			eLightShutterSystemState := E_LightShutterSystemStates.Adjusting;
 			// fJogVelocity bug to be fixed in tc_mca_std_lib
 			GVL.astAxes[MAIN.hmiAxisSelection].stControl.fJogVelocity := GVL.astAxes[MAIN.hmiAxisSelection].stConfig.fVelocityDefaultSlow*0.1;
 			GVL.astAxes[MAIN.hmiAxisSelection].stControl.bEnable := TRUE;
-		END_IF
+		END_IF*)
 		
+		(*
 		IF bOpenToOpen AND bLSS_Open THEN
 			eLightShutterSystemState := E_LightShutterSystemStates.OpenToOpen;
 			//fbOpenToOpen(bAxisDelayPower := bAxisDelayPower, bAxisDelayDone:= bAxisDelayDone);
@@ -225,7 +254,7 @@ CASE eLightShutterSystemState OF
 		IF bResetZero AND bLSS_Open THEN // Use with AX drive - Torque homing.
 			eLightShutterSystemState := E_LightShutterSystemStates.ResetZero;
 		END_IF
-		
+		*)
 		IF NOT bLSS_Open THEN
 			eNeutronFactoryState := E_NeutronFactoryStates.CoolingDown;
 			eLightShutterSystemState := E_LightShutterSystemStates.Closing;
@@ -280,13 +309,14 @@ CASE eLightShutterSystemState OF
 		// Motor power on, brake off.
 		// To do: Implement sequence: ramp, torque. Fault handling.
 		// Should we also record position of Closed shutter?
-		
+		 
+		(*
 		FOR i:=1 TO GVL_APP.nAXIS_NUM DO
 			IF aResetZero[i] THEN
 				aFbResetZero[i](bResetZero := aResetZero[i], bAxisDelayDone := bAxisDelayDone, axisNbr := i);
 			END_IF
 			
-		END_FOR
+		END_FOR*)
 				
 		//fbResetZero(bResetZero := bResetZero, bAxisDelayDone := bAxisDelayDone);
 		
@@ -434,6 +464,27 @@ FOR i := 1 TO GVL_APP.nAXIS_NUM DO
 END_FOR]]></ST>
       </Implementation>
     </Action>
+    <Action Name="actDelayDisable" Id="{4e18b649-dcfd-4b2a-b2d4-b2dab40e4515}">
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+    aTOF_delayDisable[i](IN:=aJogB[i] OR aJogF[i] OR aResetZero[i] OR aOpenToOpen[i], PT:=T#10S);
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="actDelayDone" Id="{455ad4ef-9e60-48d8-817c-ccd3b30f3296}">
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+    aTON_delayDone[i](IN:=GVL.astAxes[i].stStatus.bDone, PT:=T#1S);
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="actDelayOpenToOpen" Id="{e23c96c8-abcb-496f-80a9-e8358062f75c}">
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+    aTON_delayOpenToOpen[i](IN:=aOpenToOpen[i], PT:=T#0.5S);
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
     <Action Name="actFaults" Id="{977747f0-b936-4a6c-a020-dbc071546ad0}">
       <Implementation>
         <ST><![CDATA[// Checking for faults which could take the statemachine into a fault state
@@ -464,16 +515,55 @@ GVL_APP.aLightShutters[E_Beamline.Heimdal].nbrOfPos := 2;
 ]]></ST>
       </Implementation>
     </Action>
+    <Action Name="actJog" Id="{b8445e23-262c-4b51-8691-10e5fe140dc8}">
+      <Implementation>
+        <ST><![CDATA[// Moves all chosen beamlines
+
+FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+	//IF (aJogB[i] OR aJogF[i] OR TOF_delayJogB.Q OR TOF_delayJogF.Q) AND NOT aDisabled[i] THEN //] OR TOF_delayJog.Q
+		//GVL.astAxes[i].stControl.bEnable := TRUE;
+		IF GVL.astAxes[i].stStatus.bEnabled AND NOT aResetZero[i] AND NOT aOpenToOpen[i] THEN
+			IF (aJogB[i] OR aJogF[i]) THEN
+				GVL.astAxes[i].stControl.eCommand :=E_MotionFunctions.eJog;
+			END_IF
+			
+			GVL.astAxes[i].stControl.bJogBwd := aJogB[i] AND 
+				GVL.astAxes[i].stStatus.fActPosition >= 
+					GVL_APP.aLightShutters[i].pos[GVL_APP.aLightShutters[i].curPosNbr]*0.94; 
+		
+			GVL.astAxes[i].stControl.bJogFwd := aJogF[i] AND 
+				GVL.astAxes[i].stStatus.fActPosition <= 
+					GVL_APP.aLightShutters[i].pos[GVL_APP.aLightShutters[i].curPosNbr]*1.06;
+		END_IF
+		
+		//IF GVL.astAxes[i].stStatus.bDone AND bDelayOpenToOpen THEN // Should bDelayOpenToOpen be an array?
+		//	aOpenToOpen[i] := FALSE;
+		//END_IF
+	//ELSIF NOT aJogB[i] AND NOT aJogF[i] AND NOT aOpenToOpen[i] AND NOT aResetZero[i] THEN
+	//	GVL.astAxes[i].stControl.bEnable := FALSE;	
+	//END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
     <Action Name="actOpenToOpen" Id="{12654c2b-32ef-4d41-a9d2-090ef34fb28b}">
       <Implementation>
         <ST><![CDATA[// Moves all chosen beamlines
 
 FOR i := 1 TO GVL_APP.nAXIS_NUM DO
-	IF GVL.astAxes[i].stStatus.bEnabled THEN
-		GVL.astAxes[i].stControl.fPosition := 
+	IF aOpenToOpen[i] AND NOT aDisabled[i] THEN
+		GVL.astAxes[i].stControl.bEnable := TRUE;
+		IF GVL.astAxes[i].stStatus.bEnabled THEN
+			GVL.astAxes[i].stControl.fPosition := 
 				GVL_APP.aLightShutters[i].pos[GVL_APP.aLightShutters[i].curPosNbr];
-		GVL.astAxes[i].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
-		GVL.astAxes[i].stControl.bExecute := TRUE;
+			GVL.astAxes[i].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
+			GVL.astAxes[i].stControl.bExecute := TRUE;
+		END_IF
+		
+		IF GVL.astAxes[i].stStatus.bDone AND aTON_delayOpenToOpen[i].Q THEN // Should bDelayOpenToOpen be an array?
+			aOpenToOpen[i] := FALSE;
+		END_IF
+	//ELSIF NOT aJogB[i] AND NOT aJogF[i] AND NOT aOpenToOpen[i] AND NOT aResetZero[i] THEN
+	//	GVL.astAxes[i].stControl.bEnable := FALSE;	
 	END_IF
 END_FOR]]></ST>
       </Implementation>
@@ -498,7 +588,9 @@ END_FOR]]></ST>
         <ST><![CDATA[// Enable power to individual beamlines if not disabled.
 
 FOR i := 1 TO GVL_APP.nAXIS_NUM DO
-	GVL.astAxes[i].stControl.bEnable := (aOpenToOpen[i] AND NOT aDisabled[i]); //OR XOR ar_bPower[i];
+	IF GVL.astAxes[i].stStatus.bDone THEN
+		GVL.astAxes[i].stControl.bEnable := ((aJogB[i] OR aJogF[i] OR aTOF_delayDisable[i].Q OR aOpenToOpen[i] OR aResetZero[i]) AND NOT aDisabled[i]); //OR XOR ar_bPower[i];
+	END_IF
 END_FOR]]></ST>
       </Implementation>
     </Action>
@@ -513,6 +605,7 @@ checkClosedLimitSwitches(bOutput => bClosedShutters);
 checkAllDisabled(bOutput => bAllDisabled);
 checkOpenToOpen(bOutput => bOpenToOpen);
 checkResetZero(bOutput => bResetZero);
+checkJog(bOutput => bJog);
 checkEnabled(bOutput => bAxesEnabled);
 
 
@@ -615,6 +708,27 @@ END_VAR]]></Declaration>
 END_FOR]]></ST>
       </Implementation>
     </Method>
+    <Method Name="checkJog" Id="{afcc572f-95e3-4bd9-a32a-85e5fd026045}">
+      <Declaration><![CDATA[(*Method to check if all axes are disabled.
+Only returns TRUE if all axes are enabled.*)
+METHOD checkJog: BOOL
+VAR_OUTPUT
+    bOutput: BOOL := FALSE;
+END_VAR
+
+VAR
+	i : DINT := 1;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+	IF aJogB[i] OR aJogF[i] THEN
+		bOutput := TRUE;
+		EXIT;
+	END_IF
+END_FOR
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="checkOpenToOpen" Id="{efea51aa-8db1-49b5-a569-5913eca1228c}">
       <Declaration><![CDATA[(*Method to check if all axes are disabled.
 Only returns TRUE if all axes are enabled.*)
@@ -713,8 +827,13 @@ END_FOR]]></ST>
       <LineId Id="1629" Count="0" />
       <LineId Id="1642" Count="0" />
       <LineId Id="1752" Count="0" />
+      <LineId Id="1784" Count="0" />
+      <LineId Id="1781" Count="1" />
       <LineId Id="1212" Count="1" />
       <LineId Id="1221" Count="0" />
+      <LineId Id="1787" Count="0" />
+      <LineId Id="1789" Count="0" />
+      <LineId Id="1792" Count="0" />
       <LineId Id="1571" Count="0" />
       <LineId Id="1565" Count="0" />
       <LineId Id="733" Count="0" />
@@ -802,7 +921,15 @@ END_FOR]]></ST>
       <LineId Id="505" Count="0" />
       <LineId Id="507" Count="0" />
       <LineId Id="506" Count="0" />
-      <LineId Id="1709" Count="1" />
+      <LineId Id="1709" Count="0" />
+      <LineId Id="1753" Count="2" />
+      <LineId Id="1757" Count="2" />
+      <LineId Id="1793" Count="0" />
+      <LineId Id="1760" Count="0" />
+      <LineId Id="1756" Count="0" />
+      <LineId Id="1778" Count="1" />
+      <LineId Id="1763" Count="1" />
+      <LineId Id="1710" Count="0" />
       <LineId Id="1712" Count="0" />
       <LineId Id="1714" Count="2" />
       <LineId Id="1711" Count="0" />
@@ -812,6 +939,7 @@ END_FOR]]></ST>
       <LineId Id="1444" Count="0" />
       <LineId Id="158" Count="0" />
       <LineId Id="68" Count="0" />
+      <LineId Id="1762" Count="0" />
       <LineId Id="187" Count="1" />
       <LineId Id="1593" Count="0" />
       <LineId Id="1609" Count="0" />
@@ -855,7 +983,9 @@ END_FOR]]></ST>
       <LineId Id="280" Count="1" />
       <LineId Id="279" Count="0" />
       <LineId Id="1248" Count="0" />
-      <LineId Id="1741" Count="1" />
+      <LineId Id="1741" Count="0" />
+      <LineId Id="1794" Count="0" />
+      <LineId Id="1742" Count="0" />
       <LineId Id="1745" Count="0" />
       <LineId Id="1743" Count="0" />
       <LineId Id="1748" Count="0" />
@@ -968,6 +1098,21 @@ END_FOR]]></ST>
       <LineId Id="4" Count="0" />
       <LineId Id="1" Count="0" />
     </LineIds>
+    <LineIds Name="LightShutterSystemStates.actDelayDisable">
+      <LineId Id="2" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.actDelayDone">
+      <LineId Id="2" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.actDelayOpenToOpen">
+      <LineId Id="2" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
     <LineIds Name="LightShutterSystemStates.actFaults">
       <LineId Id="16" Count="1" />
       <LineId Id="1" Count="12" />
@@ -981,14 +1126,43 @@ END_FOR]]></ST>
       <LineId Id="24" Count="0" />
       <LineId Id="21" Count="0" />
     </LineIds>
+    <LineIds Name="LightShutterSystemStates.actJog">
+      <LineId Id="15" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="69" Count="6" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="3" Count="0" />
+    </LineIds>
     <LineIds Name="LightShutterSystemStates.actOpenToOpen">
       <LineId Id="15" Count="0" />
       <LineId Id="40" Count="0" />
       <LineId Id="1" Count="0" />
       <LineId Id="37" Count="0" />
+      <LineId Id="45" Count="1" />
       <LineId Id="42" Count="2" />
       <LineId Id="41" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="54" Count="0" />
       <LineId Id="38" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="48" Count="0" />
       <LineId Id="3" Count="0" />
     </LineIds>
     <LineIds Name="LightShutterSystemStates.actPositionSwitches">
@@ -1005,7 +1179,9 @@ END_FOR]]></ST>
     <LineIds Name="LightShutterSystemStates.actPower">
       <LineId Id="11" Count="1" />
       <LineId Id="2" Count="0" />
-      <LineId Id="4" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="0" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="LightShutterSystemStates.actRunMethods">
@@ -1015,7 +1191,7 @@ END_FOR]]></ST>
       <LineId Id="9" Count="2" />
       <LineId Id="15" Count="0" />
       <LineId Id="20" Count="0" />
-      <LineId Id="22" Count="0" />
+      <LineId Id="22" Count="1" />
       <LineId Id="21" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="6" Count="0" />
@@ -1060,6 +1236,11 @@ END_FOR]]></ST>
       <LineId Id="26" Count="2" />
       <LineId Id="30" Count="1" />
       <LineId Id="23" Count="0" />
+    </LineIds>
+    <LineIds Name="LightShutterSystemStates.checkJog">
+      <LineId Id="98" Count="4" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="17" Count="0" />
     </LineIds>
     <LineIds Name="LightShutterSystemStates.checkOpenToOpen">
       <LineId Id="98" Count="4" />

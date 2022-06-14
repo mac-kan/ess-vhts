@@ -62,6 +62,9 @@
     <Compile Include="POUs\Application_Specific\Applications\FB_ResetToZero.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Application_Specific\Applications\FB_OpenStates.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Application_Specific\Applications\NeutronFactoryStates.TcPOU">
       <SubType>Code</SubType>
     </Compile>

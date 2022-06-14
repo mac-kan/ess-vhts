@@ -5,6 +5,7 @@
 
 VAR_INPUT
 	axisNbr : UINT;
+	TON_delayDone : TON;
 END_VAR
 
 VAR_OUTPUT
@@ -20,7 +21,7 @@ END_VAR
 
 VAR_IN_OUT
 	bResetZero : BOOL;
-	bAxisDelayDone : BOOL;
+	//bAxisDelayDone : BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -103,7 +104,7 @@ END_VAR
 				GVL.astAxes[axisNbr].stControl.fPosition := GVL_APP.aLightShutters[axisNbr].pos[GVL_APP.aLightShutters[axisNbr].curPosNbr];
 				GVL.astAxes[axisNbr].stControl.bExecute := TRUE;
 				
-				IF bAxisDelayDone THEN
+				IF TON_delayDone.Q THEN
 					bResetZero := FALSE;
 				END_IF
 		END_CASE
