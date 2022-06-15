@@ -2,7 +2,7 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <Task Name="PlcTaskCom" Id="{f8b2e7ca-3729-486a-9bc7-e29045bf751d}">
     <!--CycleTime in micro seconds.-->
-    <CycleTime>1000</CycleTime>
+    <CycleTime>2000</CycleTime>
     <Priority>5</Priority>
     <PouCall>
       <Name>COMM</Name>
