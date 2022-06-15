@@ -1132,11 +1132,34 @@ Servo Drives Powered"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1232"</v>
+              <v n="TextDefault">"To do:
+*Transitions when aborting
+*Fault state"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"433"</v>
               <v n="TextDefault">"To do:
 *Transitions when aborting
 *Fault state
 *Substate as fb:s?"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1048"</v>
+              <v n="TextDefault">"To do:
+*Transitions when aborting
+*Fault state
+*Torque"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"731"</v>
+              <v n="TextDefault">"To do:
+*Transitions when aborting
+*Fault state
+*Torque Homing"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
