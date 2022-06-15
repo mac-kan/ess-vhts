@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <POU Name="FB_ResetToZero" Id="{67dc4f4f-1e2d-406f-8248-ffd9bddc7993}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_ResetToZero
+  <POU Name="FB_ResetZero" Id="{67dc4f4f-1e2d-406f-8248-ffd9bddc7993}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ResetZero
 
 VAR_INPUT
 	axisNbr : UINT;
@@ -115,7 +115,7 @@ END_VAR
 			//eLightShutterSystemState := E_LightShutterSystemStates.Open; // What should happen here?
 		END_IF]]></ST>
     </Implementation>
-    <LineIds Name="FB_ResetToZero">
+    <LineIds Name="FB_ResetZero">
       <LineId Id="10" Count="87" />
       <LineId Id="9" Count="0" />
     </LineIds>

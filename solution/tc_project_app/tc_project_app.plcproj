@@ -59,7 +59,7 @@
     <Compile Include="POUs\Application_Specific\Applications\FB_OpenToOpen.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Application_Specific\Applications\FB_ResetToZero.TcPOU">
+    <Compile Include="POUs\Application_Specific\Applications\FB_ResetZero.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Application_Specific\Applications\FB_OpenStates.TcPOU">

@@ -226,7 +226,7 @@ Add incremental choice"</v>
             </o>
             <o>
               <v n="TextID">"128"</v>
-              <v n="TextDefault">"bLSS_Open"</v>
+              <v n="TextDefault">"bLSSOpen"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

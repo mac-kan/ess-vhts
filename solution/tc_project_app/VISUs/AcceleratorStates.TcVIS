@@ -24727,7 +24727,7 @@ GVL.astAxes[Main.hmiAxisSelection].stControl.bExecute:=TRUE;"</v>
                       <l n="VisualElemMemberList" t="VisualElemMemberCollection" cet="VisualElemMember">
                         <o>
                           <v n="Id">1186196937L</v>
-                          <v n="Value">"LightShutterSystemStates.bLSS_Open"</v>
+                          <v n="Value">"LightShutterSystemStates.bLSSOpen"</v>
                         </o>
                       </l>
                     </o>
@@ -24875,7 +24875,7 @@ GVL.astAxes[Main.hmiAxisSelection].stControl.bExecute:=TRUE;"</v>
                     </o>
                     <o>
                       <v n="Id">390574330L</v>
-                      <v n="Value">"bLSS_Open"</v>
+                      <v n="Value">"bLSSOpen"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -24973,7 +24973,7 @@ GVL.astAxes[Main.hmiAxisSelection].stControl.bExecute:=TRUE;"</v>
                     </o>
                     <o>
                       <v n="Id">743958181L</v>
-                      <v n="Value">"LightShutterSystemStates.bLSS_Open"</v>
+                      <v n="Value">"LightShutterSystemStates.bLSSOpen"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -33461,8 +33461,7 @@ be accessed"</v>
                       <v n="Value">"To do:
 *Transitions when aborting
 *RTrig for first entry in state
-*Fault state
-*Substate as fb:s?"</v>
+*Fault state"</v>
                     </o>
                     <o>
                       <v n="Id">3729828405L</v>
@@ -33505,7 +33504,7 @@ be accessed"</v>
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"1997"</v>
+                      <v n="Value">"2038"</v>
                     </o>
                   </l>
                 </o>
