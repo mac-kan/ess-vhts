@@ -195,6 +195,11 @@ Add incremental choice"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1303"</v>
+              <v n="TextDefault">"bHome"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"948"</v>
               <v n="TextDefault">"bHomed"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -207,6 +212,11 @@ Add incremental choice"</v>
             <o>
               <v n="TextID">"183"</v>
               <v n="TextDefault">"bInterlock"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"382"</v>
+              <v n="TextDefault">"bJog"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -453,6 +463,11 @@ LSS / PSS"</v>
             <o>
               <v n="TextID">"861"</v>
               <v n="TextDefault">"eHomeToRef_Fwd"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"2127"</v>
+              <v n="TextDefault">"eHomeTorque"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

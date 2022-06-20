@@ -9224,13 +9224,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                               <v>TL_ElementProperties.Desc_Text</v>
                                               <v>DisplayTextId</v>
                                               <v>TL_ElementProperties.Text</v>
-                                              <v>AllocateText</v>
+                                              <v>Visu_TypeString</v>
                                               <v></v>
                                               <v>''DOCU__COMMENT</v>
                                               <v> The text, the user entered resp. can modify.</v>
                                               <v>DirectlyAssignable</v>
                                               <v></v>
-                                              <v>Visu_TypeString</v>
+                                              <v>AllocateText</v>
                                               <v></v>
                                             </d>
                                             <v n="ConvDone">false</v>
@@ -9339,13 +9339,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                               <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                               <v>DisplayTextId</v>
                                               <v>TL_ElementProperties.Tooltip</v>
-                                              <v>AllocateText</v>
+                                              <v>Visu_TypeString</v>
                                               <v></v>
                                               <v>''DOCU__COMMENT</v>
                                               <v> The tooltip, the user entered resp. can modify.</v>
                                               <v>DirectlyAssignable</v>
                                               <v></v>
-                                              <v>Visu_TypeString</v>
+                                              <v>AllocateText</v>
                                               <v></v>
                                             </d>
                                             <v n="ConvDone">false</v>
@@ -9745,13 +9745,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_Text</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Text</v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The text, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -9860,13 +9860,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Tooltip</v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The tooltip, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -10265,13 +10265,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_Text</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Text</v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The text, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -10380,13 +10380,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Tooltip</v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The tooltip, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -10785,13 +10785,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_Text</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Text</v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The text, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -10900,13 +10900,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Tooltip</v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The tooltip, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -11305,13 +11305,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_Text</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Text</v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The text, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -11420,13 +11420,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Tooltip</v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The tooltip, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -11825,13 +11825,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_Text</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Text</v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The text, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -11940,13 +11940,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Tooltip</v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The tooltip, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -12345,13 +12345,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_Text</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Text</v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The text, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -12460,13 +12460,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=1;"</v>
                                                 <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                                 <v>DisplayTextId</v>
                                                 <v>TL_ElementProperties.Tooltip</v>
-                                                <v>AllocateText</v>
+                                                <v>Visu_TypeString</v>
                                                 <v></v>
                                                 <v>''DOCU__COMMENT</v>
                                                 <v> The tooltip, the user entered resp. can modify.</v>
                                                 <v>DirectlyAssignable</v>
                                                 <v></v>
-                                                <v>Visu_TypeString</v>
+                                                <v>AllocateText</v>
                                                 <v></v>
                                               </d>
                                               <v n="ConvDone">false</v>
@@ -17517,10 +17517,11 @@ GVL.astAxes[Main.hmiAxisSelection].stControl.bExecute:=TRUE;"</v>
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
                 <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
-                  <v>OnMouseUp</v>
+                  <v>OnMouseDown</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.bJogBwd:= FALSE;"</v>
+                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eJog;
+GVL.astAxes[Main.hmiAxisSelection].stControl.bJogBwd:= TRUE;"</v>
                     </o>
                   </a>
                   <v>OnMouseClick</v>
@@ -17530,11 +17531,10 @@ GVL.astAxes[Main.hmiAxisSelection].stControl.bExecute:=TRUE;"</v>
 "</v>
                     </o>
                   </a>
-                  <v>OnMouseDown</v>
+                  <v>OnMouseUp</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eJog;
-GVL.astAxes[Main.hmiAxisSelection].stControl.bJogBwd:= TRUE;"</v>
+                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.bJogBwd:= FALSE;"</v>
                     </o>
                   </a>
                 </d>
@@ -17714,10 +17714,11 @@ GVL.astAxes[Main.hmiAxisSelection].stControl.bJogBwd:= TRUE;"</v>
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
                 <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="STSnippetInputAction[]">
-                  <v>OnMouseUp</v>
+                  <v>OnMouseDown</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.bJogFwd:= FALSE;"</v>
+                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eJog;
+GVL.astAxes[Main.hmiAxisSelection].stControl.bJogFwd:= TRUE;"</v>
                     </o>
                   </a>
                   <v>OnMouseClick</v>
@@ -17727,11 +17728,10 @@ GVL.astAxes[Main.hmiAxisSelection].stControl.bJogBwd:= TRUE;"</v>
 "</v>
                     </o>
                   </a>
-                  <v>OnMouseDown</v>
+                  <v>OnMouseUp</v>
                   <a cet="STSnippetInputAction">
                     <o>
-                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.eCommand:=E_MotionFunctions.eJog;
-GVL.astAxes[Main.hmiAxisSelection].stControl.bJogFwd:= TRUE;"</v>
+                      <v n="STSnippet">"GVL.astAxes[Main.hmiAxisSelection].stControl.bJogFwd:= FALSE;"</v>
                     </o>
                   </a>
                 </d>
@@ -27189,13 +27189,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                           <v>TL_ElementProperties.Desc_Text</v>
                                           <v>DisplayTextId</v>
                                           <v>TL_ElementProperties.Text</v>
-                                          <v>AllocateText</v>
+                                          <v>Visu_TypeString</v>
                                           <v></v>
                                           <v>''DOCU__COMMENT</v>
                                           <v> The text, the user entered resp. can modify.</v>
                                           <v>DirectlyAssignable</v>
                                           <v></v>
-                                          <v>Visu_TypeString</v>
+                                          <v>AllocateText</v>
                                           <v></v>
                                         </d>
                                         <v n="ConvDone">false</v>
@@ -27304,13 +27304,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                           <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                           <v>DisplayTextId</v>
                                           <v>TL_ElementProperties.Tooltip</v>
-                                          <v>AllocateText</v>
+                                          <v>Visu_TypeString</v>
                                           <v></v>
                                           <v>''DOCU__COMMENT</v>
                                           <v> The tooltip, the user entered resp. can modify.</v>
                                           <v>DirectlyAssignable</v>
                                           <v></v>
-                                          <v>Visu_TypeString</v>
+                                          <v>AllocateText</v>
                                           <v></v>
                                         </d>
                                         <v n="ConvDone">false</v>
@@ -27710,13 +27710,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -27825,13 +27825,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -28230,13 +28230,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -28345,13 +28345,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -28750,13 +28750,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -28865,13 +28865,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -29270,13 +29270,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -29385,13 +29385,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -29790,13 +29790,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -29905,13 +29905,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -30310,13 +30310,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -30425,13 +30425,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -30830,13 +30830,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -30945,13 +30945,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -31350,13 +31350,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -31465,13 +31465,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -31870,13 +31870,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_Text</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Text</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The text, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -31985,13 +31985,13 @@ GVL_APP.aLightShutters[2].curPosNbr:=2;"</v>
                                             <v>TL_ElementProperties.Desc_StaticTextsTooltipOnly</v>
                                             <v>DisplayTextId</v>
                                             <v>TL_ElementProperties.Tooltip</v>
-                                            <v>AllocateText</v>
+                                            <v>Visu_TypeString</v>
                                             <v></v>
                                             <v>''DOCU__COMMENT</v>
                                             <v> The tooltip, the user entered resp. can modify.</v>
                                             <v>DirectlyAssignable</v>
                                             <v></v>
-                                            <v>Visu_TypeString</v>
+                                            <v>AllocateText</v>
                                             <v></v>
                                           </d>
                                           <v n="ConvDone">false</v>
@@ -33628,10 +33628,10 @@ be accessed"</v>
               <d n="FbMethods" t="CaseInsensitiveHashtable_1" ckt="String" cvt="Guid">
                 <v>FB_Init</v>
                 <v>bab6df26-4c30-4280-b417-17fa450ae312</v>
-                <v>FB_Exit</v>
-                <v>76419a3d-2291-4623-ba2e-174b1c6162dd</v>
                 <v>FB_Reinit</v>
                 <v>2b8d3b1b-a6ae-47e2-a88a-cb77a5e0c58d</v>
+                <v>FB_Exit</v>
+                <v>76419a3d-2291-4623-ba2e-174b1c6162dd</v>
               </d>
               <v n="FbName">"NotImportant"</v>
               <v n="FbGuid">{b1d139bf-b259-4b8a-8c45-0f829e6ed1d0}</v>
@@ -33675,7 +33675,7 @@ be accessed"</v>
             </o>
             <v n="DialogDut">{6dba5541-1f8c-41ae-8bb4-c67836eeb23a}</v>
           </o>
-          <v n="LastUsedIdForIdentifier">742</v>
+          <v n="LastUsedIdForIdentifier">746</v>
           <o n="TextDocument" t="TextDocument">
             <a n="TextLines" cet="TextLine">
               <o>

@@ -17,8 +17,6 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//Axis_Template.bPowerSwitchesAxis1:=INT_TO_BOOL(GVL_PILS.stPowerSwitchesAxis1Ctr.nTargetValue);  //allows EPICS to control
 
-
-
 //Initial parameters of an Axis
 (*IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
     //Initial default values:
@@ -32,20 +30,5 @@ END_IF*)
 Eg. GVL.astAxes[x].stControl.bInterlockFwd := NOT bInterlockFwdOK;*)
 ]]></ST>
     </Implementation>
-    <LineIds Name="Axis_Template">
-      <LineId Id="54" Count="0" />
-      <LineId Id="57" Count="0" />
-      <LineId Id="89" Count="1" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="17" Count="2" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="23" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

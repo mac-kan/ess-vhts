@@ -59,6 +59,9 @@
     <Compile Include="POUs\Application_Specific\Applications\FB_ResetZero.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Application_Specific\Applications\HomeByTorque.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Application_Specific\Applications\NeutronFactoryStates.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -253,6 +256,10 @@
     </Compile>
     <Compile Include="VISUs\languageTable.TcTLO">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VISUs\Torque.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

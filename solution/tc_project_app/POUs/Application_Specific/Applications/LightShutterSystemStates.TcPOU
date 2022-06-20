@@ -2,8 +2,12 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="LightShutterSystemStates" Id="{e74b52d0-a3ab-400c-a63b-35c8320e25fb}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM LightShutterSystemStates
-VAR
 
+VAR CONSTANT
+	nAXIS_NUM : UINT := GVL_APP.nAXIS_NUM - 1; // JUST FOR TESTCRATE!
+END_VAR
+
+VAR
 	eNeutronFactoryState: E_NeutronFactoryStates := E_NeutronFactoryStates.Disabled;
 	// eResetZeroInternal: E_ResetZero := E_ResetZero.INIT;
 	eLightShutterSystemState: E_LightShutterSystemStates := E_LightShutterSystemStates.Init;
@@ -20,7 +24,7 @@ VAR
 	
 	bStartup : BOOL := TRUE;	// Help var for indicating first cycle. Set to FALSE thereafter.
 	bEnablePower: BOOL; 		// Input var for actCascadePower - COULD POWER BE INCLUDED IN ST_LightShutter?
-	aDisabled: ARRAY [1..GVL_APP.nAXIS_NUM] OF BOOL; // INCLUDE IN ST_LightShutter?
+	aDisabled: ARRAY [1..nAXIS_NUM] OF BOOL; // INCLUDE IN ST_LightShutter?
 	
 	bClosedShutters: BOOL := FALSE; // Output variable of checkClosedLimitSwitches
 	bAllDisabled: BOOL := FALSE; // Output variable of checkAllDisabled
@@ -37,16 +41,16 @@ VAR
 	
 	bOpenHiFake : BOOL; // Simulating a pos switch. To be replaced with physical switch.
 	
-	aOpenToOpen : ARRAY[1..GVL_APP.nAXIS_NUM] OF BOOL; 	// Array of axes call to OpenToOpen
-	aTON_delayOpenToOpen : ARRAY[1..GVL_APP.nAXIS_NUM] OF TON;
+	aOpenToOpen : ARRAY[1..nAXIS_NUM] OF BOOL; 	// Array of axes call to OpenToOpen
+	aTON_delayOpenToOpen : ARRAY[1..nAXIS_NUM] OF TON;
 	
-	aResetZero : ARRAY[1..GVL_APP.nAXIS_NUM] OF BOOL; 	// Array of axes call to ResetZero
-	aFbResetZero : ARRAY[1..GVL_APP.nAXIS_NUM] OF FB_ResetZero;
+	aResetZero : ARRAY[1..nAXIS_NUM] OF BOOL; 	// Array of axes call to ResetZero
+	aFbResetZero : ARRAY[1..nAXIS_NUM] OF FB_ResetZero;
 	
-	aJogF : ARRAY[1..GVL_APP.nAXIS_NUM] OF BOOL; 		// Array of axes call to Adjust
-	aJogB : ARRAY[1..GVL_APP.nAXIS_NUM] OF BOOL;		// Array of axes call to Adjust
-	aTOF_delayDisable : ARRAY[1..GVL_APP.nAXIS_NUM] OF TOF;
-	aTON_delayDone : ARRAY[1..GVL_APP.nAXIS_NUM] OF TON;
+	aJogF : ARRAY[1..nAXIS_NUM] OF BOOL; 		// Array of axes call to Adjust
+	aJogB : ARRAY[1..nAXIS_NUM] OF BOOL;		// Array of axes call to Adjust
+	aTOF_delayDisable : ARRAY[1..nAXIS_NUM] OF TOF;
+	aTON_delayDone : ARRAY[1..nAXIS_NUM] OF TON; // Remove - moved to FB_ResetZero
 	
 END_VAR
 
@@ -371,7 +375,7 @@ END_CASE
         <ST><![CDATA[// Closes all beamlines, in the future in a cascade to limit power peak.
 // To fix: Cascading
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
 
 	IF GVL.astAxes[i].stStatus.bEnabled THEN
 		GVL.astAxes[i].stControl.eCommand:=E_MotionFunctions.eJog;
@@ -386,7 +390,7 @@ END_FOR]]></ST>
         <ST><![CDATA[// Homes all beamlines, in the future in a cascade
 // To fix: Cascading
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
 	IF GVL.astAxes[i].stStatus.bEnabled THEN
 		GVL.astAxes[i].stConfig.eHomeSeq := E_HomingRoutines.eHomeToLimit_Bwd;
 		GVL.astAxes[i].stControl.eCommand := E_MotionFunctions.eHome;
@@ -400,7 +404,7 @@ END_FOR]]></ST>
         <ST><![CDATA[// Opens all beamlines to the first focal point position, in the future in a cascade
 // To do: Cascading
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
 	IF GVL.astAxes[i].stStatus.fActPosition <> 100 THEN // Change to something sensible
 		IF GVL.astAxes[i].stStatus.bEnabled THEN
 			GVL.astAxes[i].stControl.fPosition := GVL_APP.aLightShutters[i].pos[1];
@@ -417,7 +421,7 @@ END_FOR]]></ST>
         <ST><![CDATA[// Enable power to all beamlines if not disabled, in the future cascading.
 // To fix: cascading.
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
 	GVL.astAxes[i].stControl.bEnable := (bEnablePower AND NOT aDisabled[i]); //OR XOR ar_bPower[i];
 END_FOR]]></ST>
       </Implementation>
@@ -426,7 +430,7 @@ END_FOR]]></ST>
       <Implementation>
         <ST><![CDATA[// Delays the disabeling of each axis
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
     aTOF_delayDisable[i](IN:=aJogB[i] OR aJogF[i] OR aResetZero[i] OR aOpenToOpen[i], PT:=T#10S);
 END_FOR]]></ST>
       </Implementation>
@@ -435,7 +439,7 @@ END_FOR]]></ST>
       <Implementation>
         <ST><![CDATA[// Delays the bDone of each axis
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
     aTON_delayDone[i](IN:=GVL.astAxes[i].stStatus.bDone, PT:=T#1S);
 END_FOR]]></ST>
       </Implementation>
@@ -444,7 +448,7 @@ END_FOR]]></ST>
       <Implementation>
         <ST><![CDATA[// Delays aOpenToOpen[i] for each axis
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
     aTON_delayOpenToOpen[i](IN:=aOpenToOpen[i], PT:=T#0.5S);
 END_FOR]]></ST>
       </Implementation>
@@ -483,7 +487,7 @@ GVL_APP.aLightShutters[E_Beamline.Heimdal].nbrOfPos := 2;
       <Implementation>
         <ST><![CDATA[// Moves all chosen beamlines
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
 
 		IF GVL.astAxes[i].stStatus.bEnabled AND NOT aResetZero[i] AND NOT aOpenToOpen[i] AND NOT aDisabled[i] THEN
 			IF (aJogB[i] OR aJogF[i]) THEN
@@ -506,7 +510,7 @@ END_FOR]]></ST>
       <Implementation>
         <ST><![CDATA[// Moves all chosen beamlines to chosen position
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
 	
 	IF aOpenToOpen[i] AND NOT aDisabled[i] THEN
 		GVL.astAxes[i].stControl.bEnable := TRUE;
@@ -532,7 +536,7 @@ END_FOR]]></ST>
       <Implementation>
         <ST><![CDATA[// Update the array of switches
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
 	
 	GVL_APP.aPosSwitch[i,1] := GVL.astAxes[i].stInputs.bHomeSensor; // Needs change to correct BOOL
 	
@@ -547,7 +551,7 @@ END_FOR]]></ST>
       <Implementation>
         <ST><![CDATA[// Enable power to individual beamlines if not disabled.
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
 	
 	IF GVL.astAxes[i].stStatus.bDone THEN
 		GVL.astAxes[i].stControl.bEnable := ((aJogB[i] OR aJogF[i] OR aTOF_delayDisable[i].Q OR aOpenToOpen[i] OR aResetZero[i]) AND NOT aDisabled[i]); //OR XOR ar_bPower[i];
@@ -560,7 +564,7 @@ END_FOR]]></ST>
       <Implementation>
         <ST><![CDATA[// Calls a FB_ResetZero for each axis where aResetZero[i] is TRUE
 
-FOR i:=1 TO GVL_APP.nAXIS_NUM DO
+FOR i:=1 TO nAXIS_NUM DO
 	
 	IF aResetZero[i] AND NOT aDisabled[i] THEN
         aFbResetZero[i](bResetZero := aResetZero[i], bAxisDone:=GVL.astAxes[i].stStatus.bDone, axisNbr := i);
@@ -597,7 +601,7 @@ checkAllDisabled(bOutput => bAllDisabled);
       <Implementation>
         <ST><![CDATA[// Saves the current position of all axes to aLightShutters. NOT USED
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
 	GVL_APP.aLightShutters[i].pos[GVL_APP.aLightShutters[MAIN.hmiAxisSelection].curPosNbr] := GVL.astAxes[i].stStatus.fActPosition;
 END_FOR]]></ST>
       </Implementation>
@@ -614,7 +618,7 @@ VAR
 	i : DINT := 1;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+        <ST><![CDATA[FOR i := 1 TO nAXIS_NUM DO
 	IF NOT aDisabled[i] THEN
 		bOutput := FALSE;
 		EXIT;
@@ -635,7 +639,7 @@ VAR
 	i : DINT := 1;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+        <ST><![CDATA[FOR i := 1 TO nAXIS_NUM DO
 	IF NOT aDisabled[i] THEN
 		IF NOT GVL.astAxes[i].stStatus.bDone THEN
     		bOutput := FALSE;
@@ -659,7 +663,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Needs fix, dealing with e.g. fPos 0.
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
 	IF GVL.astAxes[i].stInputs.bLimitBwd AND NOT aDisabled[i] THEN
 		bOutput := FALSE;
 		EXIT;
@@ -679,7 +683,7 @@ VAR
 	i : DINT := 1;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+        <ST><![CDATA[FOR i := 1 TO nAXIS_NUM DO
 	IF GVL.astAxes[i].stStatus.bEnabled THEN
     	bOutput := TRUE;
 		EXIT;
@@ -699,7 +703,7 @@ VAR
 	i : DINT := 1;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+        <ST><![CDATA[FOR i := 1 TO nAXIS_NUM DO
 	IF aJogB[i] OR aJogF[i] THEN
 		bOutput := TRUE;
 		EXIT;
@@ -720,7 +724,7 @@ VAR
 	i : DINT := 1;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+        <ST><![CDATA[FOR i := 1 TO nAXIS_NUM DO
 	IF aOpenToOpen[i] THEN
 		bOutput := TRUE;
 		EXIT;
@@ -743,7 +747,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Needs fix, dealing with e.g. fPos 0.
 
-FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+FOR i := 1 TO nAXIS_NUM DO
 	IF NOT aDisabled[i] THEN // Check if beamline is disabled/enabled
 		IF GVL.astAxes[i].stStatus.fActPosition < GVL.astAxes[i].stControl.fPosition*0.9 
 		OR GVL.astAxes[i].stStatus.fActPosition > GVL.astAxes[i].stControl.fPosition*1.10 THEN  // Add something about position?
@@ -766,7 +770,7 @@ VAR
 	i : DINT := 1;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+        <ST><![CDATA[FOR i := 1 TO nAXIS_NUM DO
 	IF aResetZero[i] THEN
 		bOutput := TRUE;
 		EXIT;
@@ -787,7 +791,7 @@ VAR
 	i : DINT := 1;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR i := 1 TO GVL_APP.nAXIS_NUM DO
+        <ST><![CDATA[FOR i := 1 TO nAXIS_NUM DO
 	IF NOT GVL.astAxes[i].stStatus.bHomed THEN
     	bOutput := FALSE;
 		EXIT;
