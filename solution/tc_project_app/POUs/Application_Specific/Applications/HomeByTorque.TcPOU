@@ -5,7 +5,7 @@
 VAR
 	bJog : BOOL;
 	bHome : BOOL;
-	
+	bFirst : BOOL := FALSE;
 	nState : DINT := 0;
 	
 END_VAR
@@ -14,53 +14,22 @@ END_VAR
       <ST><![CDATA[GVL.astAxes[3].stInputs.bLimitBwd := TRUE;
 GVL.astAxes[3].stInputs.bLimitFwd := TRUE;
 
-(*
-CASE nState OF
-	0:
-		IF bHome THEN
-			nState := 10;
-		END_IF
-		
-	10: 
-		GVL.astAxes[3].stControl.bEnable := TRUE;
-		IF GVL.astAxes[3].stStatus.bEnabled THEN
-			nState := 20;
-		END_IF
-		
-	20:
-		// Go to Torque Homing - to implement
-			
-			IF GVL.astAxes[3].stStatus.bBusy THEN
-				nState := 30;
-			END_IF
-		
-		30: 
-			IF GVL.astAxes[3].stStatus.bDone THEN
-				nState := 0;
-			END_IF
-	
-END_CASE
-*)
-
-(*
-IF NOT bHome THEN
-	IF GVL.astAxes[3].stStatus.bEnabled THEN
-		GVL.astAxes[3].stControl.eCommand :=E_MotionFunctions.eJog;
-		GVL.astAxes[3].stControl.bJogFwd := bJog;
-	END_IF
-END_IF
-
-IF bHome THEN
-	GVL.astAxes[3].stControl.bEnable := TRUE;
-	IF GVL.astAxes[3].stStatus.bEnabled THEN
-		GVL.astAxes[3].stControl.eCommand:=E_MotionFunctions.eHome;
-		GVL.astAxes[3].stConfig.eHomeSeq:=E_HomingRoutines.eHomeToBlock_Bwd;
-		GVL.astAxes[3].stControl.bExecute:=TRUE;		
-			
-	END_IF
-END_IF
-*)
-]]></ST>
+IF NOT bFirst THEN
+	actInit();
+END_IF]]></ST>
     </Implementation>
+    <Action Name="actInit" Id="{8f5a024e-e558-49a7-ad91-fee0bd2230b1}">
+      <Implementation>
+        <ST><![CDATA[GVL.astAxes[3].stConfig.stStepBlock.tDetectionVelocity := T#200MS;
+GVL.astAxes[3].stConfig.stStepBlock.fAcceleration := 100;
+GVL.astAxes[3].stConfig.stStepBlock.fDeceleration := 100;
+GVL.astAxes[3].stConfig.stStepBlock.fDetectionVelocityLimit := GVL.astAxes[3].stConfig.fHomingVelFromCam*0.1;
+GVL.astAxes[3].stConfig.stStepBlock.fDistanceLimit := 100000;
+GVL.astAxes[3].stConfig.stStepBlock.fTorqueLimit := 50000000000000000;
+GVL.astAxes[3].stConfig.stStepBlock.fTorqueTolerance := 50000000000000000;
+GVL.astAxes[3].stConfig.stStepBlock.fVeloMax := GVL.astAxes[3].stConfig.fHomingVelFromCam;
+GVL.astAxes[3].stConfig.stStepBlock.tLimit := T#20000MS;]]></ST>
+      </Implementation>
+    </Action>
   </POU>
 </TcPlcObject>

@@ -87,7 +87,7 @@ Application_Template();
 //SeqRangePos();
 //NeutronFactoryStates();
 
-LightShutterSystemStates();
+//LightShutterSystemStates();
 HomeByTorque();]]></ST>
       </Implementation>
     </Action>

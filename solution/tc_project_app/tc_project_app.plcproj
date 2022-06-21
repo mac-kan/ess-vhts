@@ -131,6 +131,9 @@
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisConfig.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\ST_StepBlockConfig.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisControl.TcDUT">
       <SubType>Code</SubType>
     </Compile>
