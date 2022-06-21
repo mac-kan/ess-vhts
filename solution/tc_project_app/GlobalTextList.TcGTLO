@@ -426,6 +426,16 @@ LSS / PSS"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"2076"</v>
+              <v n="TextDefault">"eHomeToBlock_Bwd"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"2095"</v>
+              <v n="TextDefault">"eHomeToBlock_Fwd"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"198"</v>
               <v n="TextDefault">"eHomeToEncPulse_Bwd"</v>
               <l n="LanguageTexts" t="ArrayList" />

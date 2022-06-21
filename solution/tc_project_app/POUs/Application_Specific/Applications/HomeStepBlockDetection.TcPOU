@@ -38,14 +38,22 @@ GVL.astAxes[3].stConfig.stStepBlock.tTimeLimit := T#20000MS;
 GVL.astAxes[1].stConfig.stStepBlock.tDetectionVelocityTime := T#60MS;
 GVL.astAxes[1].stConfig.stStepBlock.fAcceleration := 100;
 GVL.astAxes[1].stConfig.stStepBlock.fDeceleration := 100;
-GVL.astAxes[1].stConfig.stStepBlock.fDetectionVelocityLimit := GVL.astAxes[3].stConfig.fHomingVelFromCam*0.007;
+GVL.astAxes[1].stConfig.stStepBlock.fDetectionVelocityLimit := GVL.astAxes[1].stConfig.fHomingVelFromCam*0.007;
 GVL.astAxes[1].stConfig.stStepBlock.fDistanceLimit := 100000;
 GVL.astAxes[1].stConfig.stStepBlock.fTorqueLimit := 100;
 GVL.astAxes[1].stConfig.stStepBlock.fTorqueTolerance := 100;
-GVL.astAxes[1].stConfig.stStepBlock.fVeloMax := GVL.astAxes[3].stConfig.fHomingVelFromCam*0.01;
+GVL.astAxes[1].stConfig.stStepBlock.fVeloMax := GVL.astAxes[1].stConfig.fHomingVelFromCam*0.01;
 GVL.astAxes[1].stConfig.stStepBlock.tTimeLimit := T#20000MS;
 
-]]></ST>
+GVL.astAxes[2].stConfig.stStepBlock.tDetectionVelocityTime := T#60MS;
+GVL.astAxes[2].stConfig.stStepBlock.fAcceleration := 100;
+GVL.astAxes[2].stConfig.stStepBlock.fDeceleration := 100;
+GVL.astAxes[2].stConfig.stStepBlock.fDetectionVelocityLimit := GVL.astAxes[2].stConfig.fHomingVelFromCam*0.005;
+GVL.astAxes[2].stConfig.stStepBlock.fDistanceLimit := 100000;
+GVL.astAxes[2].stConfig.stStepBlock.fTorqueLimit := 100;
+GVL.astAxes[2].stConfig.stStepBlock.fTorqueTolerance := 100;
+GVL.astAxes[2].stConfig.stStepBlock.fVeloMax := GVL.astAxes[2].stConfig.fHomingVelFromCam*0.01;
+GVL.astAxes[2].stConfig.stStepBlock.tTimeLimit := T#20000MS;]]></ST>
       </Implementation>
     </Action>
   </POU>
