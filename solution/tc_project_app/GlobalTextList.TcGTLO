@@ -1076,6 +1076,12 @@ Servo Drives Powered"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"1522"</v>
+              <v n="TextDefault">"Servo 
+Motor"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"611"</v>
               <v n="TextDefault">"shomeDirect"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -1128,6 +1134,17 @@ Servo Drives Powered"</v>
             <o>
               <v n="TextID">"1073"</v>
               <v n="TextDefault">"StartUp"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"889"</v>
+              <v n="TextDefault">"Stepper 
+Motor"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"822"</v>
+              <v n="TextDefault">"Stepper Motor"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

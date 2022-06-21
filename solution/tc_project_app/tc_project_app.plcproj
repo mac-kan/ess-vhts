@@ -59,7 +59,7 @@
     <Compile Include="POUs\Application_Specific\Applications\FB_ResetZero.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Application_Specific\Applications\HomeByTorque.TcPOU">
+    <Compile Include="POUs\Application_Specific\Applications\HomeStepBlockDetection.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Application_Specific\Applications\NeutronFactoryStates.TcPOU">
@@ -260,7 +260,7 @@
     <Compile Include="VISUs\languageTable.TcTLO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VISUs\Torque.TcVIS">
+    <Compile Include="VISUs\StepBlockDetection.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
